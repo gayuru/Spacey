@@ -1,4 +1,4 @@
 package Model.Users;
 
-public class User {
+public abstract class User {
 }
