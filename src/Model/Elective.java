@@ -1,7 +1,7 @@
 package Model;
 
-public class Course extends AbstractCourse {
-    public Course(String courseId, String courseName, String courseSemester) {
+public class Elective extends AbstractCourse {
+    public Elective(String courseId, String courseName, String courseSemester) {
         super(courseId, courseName, courseSemester);
     }
 
