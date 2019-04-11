@@ -19,19 +19,20 @@ public class Main {
 
         pm.addCourseOffering(ITP);
         computerScience.printVal();
-//        System.out.println("Welcome user. Please log in (Enter your staff/student id) :");
-//        String user = scanner.nextLine();
-//        int choice;
-//        if(user.contains("e")){
-//            System.out.println("Welcome Staff");
-//            method1("staff");
-//        }else if(user.contains("s")){
-//            System.out.println("Welcome Student");
-//            method1("student");
-//            System.out.println("Enter an option");
-//            choice = Integer.parseInt(scanner.nextLine());
-//            method2(choice);
-//        }
+
+        System.out.println("Welcome user. Please log in (Enter your staff/student id) :");
+        String user = scanner.nextLine();
+        int choice;
+        if(user.contains("e")){
+            System.out.println("Welcome Staff");
+            method1("staff");
+        }else if(user.contains("s")){
+            System.out.println("Welcome Student");
+            method1("student");
+            System.out.println("Enter an option");
+            choice = Integer.parseInt(scanner.nextLine());
+            method2(choice);
+        }
 
     }
 
