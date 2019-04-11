@@ -61,6 +61,8 @@ public class Console {
         for(int i=0;i<students.size();++i ){
             if(students.get(i).getUserId().equals(s)){
                 st = students.get(i);
+            }else{
+                System.out.println("User ID : "+ s + " not found");
             }
         }
 
