@@ -42,11 +42,14 @@ public class Program {
     }
 
 
+    public int getNumberOfProgramCourses() {
+        return programCourses.size();
+    }
+
     public void printVal(){
-        for(String name:programCourses.keySet()){
-            String key = name.toString();
-            String value = programCourses.get(key).getCourseName();
-            System.out.println("Program name: " + value);
+        for(String programID:programCourses.keySet()){
+            String courseName = programCourses.get(programID).getCourseName();
+            System.out.println("Program name: " + courseName);
         }
     }
 

@@ -12,45 +12,41 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 
+/*
+    Sogyal -> P
+ */
+
 public class Console {
+    Scanner scanner = new Scanner(System.in);
+
+    Program computerScience = new Program("BP0964","Bachelors of Computer Science");
+    AbstractCourse ITP = new Course("COSC1242","Intro To Programming","S1Y1");
+
+    Student student = new Student("s123","ASDAD",computerScience);
+    ProgramManager pm = new ProgramManager("E9123","Bob",computerScience);
 
     private List<Student> students = new ArrayList<>();
+    private List<ProgramManager> programManager = new ArrayList<>();
 
     public void run(){
-
-        Scanner scanner = new Scanner(System.in);
-
-        Program computerScience = new Program("BP0964","Bachelors of Computer Science");
-        AbstractCourse ITP = new Course("COSC1242","Intro To Programming","S1Y1");
-
-        Student student = new Student("s123","ASDAD",computerScience);
-        ProgramManager pm = new ProgramManager("E9123","Bob",computerScience);
-
         students.add(student);
-
-        //pm.addCourseOffering(ITP);
-        //computerScience.printVal();
+        programManager.add(pm);
 
         System.out.println("Welcome User. Please log in (Enter your staff/student id) :");
 
         String userType = scanner.nextLine();
 
-        int choice;
         if(userType.contains("e")){
             System.out.println("Welcome Staff");
-            //viewMenu("staff");
-
-        }else if(userType.contains("s")){
-
+            viewMenu(pm);
+        }else if(userType.contains("s")) {
             Student st = returnStudent(userType);
+            if(st == null) {
+                System.exit(0);
+            }
             System.out.println("Welcome "+ st.getUserName());
-
             System.out.println("Program "+ st.getProgram().getProgramId()+" "+ st.getProgram().getProgramName()+"\n");
-
             viewMenu(st);
-            System.out.println("Enter an option:");
-            choice = Integer.parseInt(scanner.nextLine());
-            method2(choice);
         }
 
     }
@@ -66,31 +62,32 @@ public class Console {
             }
         }
 
-       return st;
+        return st;
     }
 
-    private  void method2(int choice){
-        switch (choice){
-            case 1:
-
-
-        }
-    }
-
-    private  void viewMenu(User s){
-
-        if(s instanceof ProgramManager) {
-            System.out.println("1) View Program");
-            System.out.println("2) Add course offerings");
-        }else if(s instanceof Student){
+    private void viewMenu(User s) {
+        int choice;
+        if (s instanceof ProgramManager) {
+            do {
+                System.out.println("1) View Program");
+                System.out.println("2) Add course offerings");
+                System.out.println("Enter an option:");
+                choice = Integer.parseInt(scanner.nextLine());
+                if (choice == 1) {
+                    if (computerScience.getNumberOfProgramCourses() != 0) {
+                        computerScience.printVal();
+                    }
+                } else if (choice == 2) {
+                    if (pm.addCourseOffering(ITP)) {
+                        System.out.println(ITP.getCourseName() + " ADDED SUCCESSFULLY");
+                    }
+                } else {
+                    System.exit(0);
+                }
+                System.out.println();
+            } while (choice != 0);
+        } else if (s instanceof Student) {
             System.out.println("1) Enrol Course");
-
         }
     }
-
-
-
-
-
-
-}
+    }
