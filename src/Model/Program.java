@@ -37,7 +37,7 @@ public class Program {
         return programName;
     }
 
-    public Map<String,Course> getProgramCourse(){
+    public Map<String,Course> getProgramCourses(){
         return this.programCourses;
     }
 

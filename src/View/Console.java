@@ -136,7 +136,7 @@ public class Console {
     private void enrolSubjects(Student student,String choice){
         AbstractCourse currentCourse=null;
 
-        for(AbstractCourse course : student.getProgram().getProgramCourse().values()){
+        for(AbstractCourse course : student.getProgram().getProgramCourses().values()){
             if (choice.equals(course.getCourseId())){
                     currentCourse =course;
             }
