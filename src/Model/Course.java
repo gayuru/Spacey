@@ -1,8 +1,8 @@
 package Model;
 
 public class Course extends AbstractCourse {
-    public Course(String courseId, String courseName, String courseSemester) {
-        super(courseId, courseName, courseSemester);
+    public Course(String courseId, String courseName) {
+        super(courseId, courseName);
     }
 
     @Override
@@ -13,11 +13,6 @@ public class Course extends AbstractCourse {
     @Override
     public String getCourseName() {
         return super.getCourseName();
-    }
-
-    @Override
-    public String getCourseSemester() {
-        return super.getCourseSemester();
     }
 
 
