@@ -26,8 +26,6 @@ public abstract class AbstractCourse {
 
     @Override
     public String toString() {
-        return "Current Enrolled Courses: " +
-                "courseId='" + courseId + '\'' +
-                ", courseName='" + courseName + '\'';
+        return "\nCurrent Enrolled Courses:\n" +courseId+":"+courseName;
     }
 }

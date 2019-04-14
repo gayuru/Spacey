@@ -61,22 +61,24 @@ public class Program {
         programCourses.put("BP1462",new Course("COSC145","Rapid Application Development","S1Y1"));
     }
 
-
     public Map<String,Student> getStudents(){
         return this.students;
     }
 
-
     public void printVal(){
+        int num=1;
         for(String programID:programCourses.keySet()){
+            String courseCode = programCourses.get(programID).getCourseId();
             String courseName = programCourses.get(programID).getCourseName();
-            System.out.println("Program name: " + courseName);
+
+            System.out.println(num+") "+ courseCode +" : "+ courseName);
+            num++;
         }
     }
 
     @Override
     public String toString() {
-        return String.format("\nProgram Id: %s,\nProgram Name: %s", getProgramId(),getProgramName());
+        return String.format(getProgramId() + " : "+ getProgramName());
     }
 
 }
