@@ -1,9 +1,6 @@
 package Model.Users;
 
-import Model.AbstractCourse;
-import Model.Course;
-import Model.Elective;
-import Model.Program;
+import Model.*;
 
 public class ProgramManager extends User {
     private Program program;
@@ -13,14 +10,8 @@ public class ProgramManager extends User {
         this.program = program;
     }
 
-    public boolean addCourseOffering(AbstractCourse course){
-        if(course instanceof Course) {
-            program.addCourse((Course) course);
-            return true;
-        }else{
-            program.addElective((Elective) course);
-            return true;
-        }
+    public void addCourseOffering(AbstractCourse course, Semester sem){
+        sem.addSubjectSem(course);
     }
 
     @Override
@@ -32,4 +23,6 @@ public class ProgramManager extends User {
     public String getUserName() {
         return super.getUserName();
     }
+
+    public Program getProgram() {return this.program; }
 }
