@@ -1,18 +1,26 @@
-import Model.AbstractCourse;
 import Model.Course;
 import Model.Program;
-import Model.Users.ProgramManager;
+import Model.Semester;
 import Model.Users.Student;
-import Model.Users.User;
-import View.Console;
-
-import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Console console = new Console();
-        console.run();
+        Program program = new Program("BP162","Bachelors of IT");
+        Student user = new Student("s3692351","Sogyal",program);
+        Semester semester = new Semester(program.getProgramId());
+        program.addStudentToProgram(user);
+//
+//        for(Student student : program.getStudents().values()){
+//            System.out.println(student.toString());
+//        }
+
+        semester.addStudentSubjects(user,new Course("COSC123","SADI","ASD"));
+        System.out.println(semester.getStudentSubjects(user));
+
+
+//        Console console = new Console();
+//        console.run();
 
     }
 

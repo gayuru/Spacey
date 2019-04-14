@@ -1,6 +1,8 @@
 package Model;
 
-import java.util.Collection;
+import Model.Users.Student;
+import Model.Users.User;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,12 +11,14 @@ public class Program {
     private String programName;
     private Map<String,Course> programCourses;
     private Map<String, Elective> programElectives;
+    private Map<String,Student> students;
 
     public Program(String programId, String programName) {
         this.programId = programId;
         this.programName = programName;
         this.programCourses = new HashMap<>();
         this.programElectives = new HashMap<>();
+        this.students = new HashMap<>();
     }
 
     public void addCourse(Course course){
@@ -41,10 +45,19 @@ public class Program {
         return this.programElectives;
     }
 
-
     public int getNumberOfProgramCourses() {
         return programCourses.size();
     }
+
+    public boolean addStudentToProgram(Student student){
+        return this.students.put(student.getUserId(),student)!=null;
+    }
+
+
+    public Map<String,Student> getStudents(){
+        return this.students;
+    }
+
 
     public void printVal(){
         for(String programID:programCourses.keySet()){
@@ -55,7 +68,7 @@ public class Program {
 
     @Override
     public String toString() {
-        return String.format("Program Id: %s, Program Name: %s", getProgramId(),getProgramName());
+        return String.format("\nProgram Id: %s,\nProgram Name: %s", getProgramId(),getProgramName());
     }
 
 }

@@ -13,7 +13,7 @@ import java.util.Scanner;
 import java.util.List;
 
 /*
-    Sogyal -> P
+    Sogyal -> Program and Semester
  */
 
 public class Console {

@@ -23,4 +23,11 @@ public abstract class AbstractCourse {
     public String getCourseSemester() {
         return courseSemester;
     }
+
+    @Override
+    public String toString() {
+        return "Current Enrolled Courses: " +
+                "courseId='" + courseId + '\'' +
+                ", courseName='" + courseName + '\'';
+    }
 }
