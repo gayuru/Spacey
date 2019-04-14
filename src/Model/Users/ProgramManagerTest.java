@@ -26,16 +26,27 @@ public class ProgramManagerTest {
     }
     @Test
     public void addCourseOffering() {
-        johnDoe.addCourseOffering(courseOne);
+        assertTrue(johnDoe.addCourseOffering(courseOne));
     }
-
+    @Test
+    public void addCourseOfferingElective() {
+        assertTrue(johnDoe.addCourseOffering(electiveOne));
+    }
     @Test
     public void getUserId() {
-        fail("This test is yet to be implemented");
+        //expected result
+        String expectedResult = "e123456";
+        // actual result
+        String actualResult = johnDoe.getUserId();
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
     public void getUserName() {
-        fail("This test is yet to be implemented");
+        //expected result
+        String expectedResult = "John Doe";
+        // actual result
+        String actualResult = johnDoe.getUserName();
+        assertEquals(expectedResult, actualResult);
     }
 }
