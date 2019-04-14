@@ -19,4 +19,6 @@ public class Course extends AbstractCourse {
     public String getCourseSemester() {
         return super.getCourseSemester();
     }
+
+
 }

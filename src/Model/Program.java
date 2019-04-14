@@ -1,7 +1,6 @@
 package Model;
 
 import Model.Users.Student;
-import Model.Users.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +18,7 @@ public class Program {
         this.programCourses = new HashMap<>();
         this.programElectives = new HashMap<>();
         this.students = new HashMap<>();
+        addCoursesToProgram();
     }
 
     public void addCourse(Course course){
@@ -51,6 +51,14 @@ public class Program {
 
     public boolean addStudentToProgram(Student student){
         return this.students.put(student.getUserId(),student)!=null;
+    }
+
+    public void addCoursesToProgram(){
+        programCourses.put("BP162",new Course("COSC123","Further Programming","S1Y1"));
+        programCourses.put("BP0965",new Course("COSC131","Mobile Application Development","S1Y1"));
+        programCourses.put("BP112",new Course("COSC451","Cloud Computing","S1Y2"));
+        programCourses.put("BP1362",new Course("COSC653","User Centered Design","S1Y2"));
+        programCourses.put("BP1462",new Course("COSC145","Rapid Application Development","S1Y1"));
     }
 
 

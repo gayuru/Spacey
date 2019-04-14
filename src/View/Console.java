@@ -88,6 +88,10 @@ public class Console {
             } while (choice != 0);
         } else if (s instanceof Student) {
             System.out.println("1) Enrol Course");
+            for (Course course : computerScience.getProgramCourse().values()){
+                System.out.println(course.toString());
+            }
+            //View current Courses
         }
     }
     }
