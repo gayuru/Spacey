@@ -1,7 +1,5 @@
 package Model.Users;
-import Model.Course;
-import Model.Elective;
-import Model.Program;
+import Model.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -15,23 +13,26 @@ public class ProgramManagerTest {
     private static Program computerScience;
     private static Course courseOne;
     private static Elective electiveOne;
+    private static Semester semester;
     private static ProgramManager johnDoe;
 
     @BeforeClass
     public static void setUp() {
-        computerScience = new Program("BP160", "Bachelors of Computer Science");
-        courseOne = new Course("COSC1242","Intro To Programming","S1Y1");
+        computerScience = new Program("BP160", "Bachelors of Computer Science",3);
+        courseOne = new Course("COSC1242","Intro To Programming");
         electiveOne = new Elective("COSC1111","Data-Communication and Net-Centric Computing","S1Y1");
         johnDoe = new ProgramManager("e123456", "John Doe", computerScience);
+        semester = new Semester("s1y1");
     }
     @Test
     public void addCourseOffering() {
-        assertTrue(johnDoe.addCourseOffering(courseOne));
+        johnDoe.addCourseOffering(courseOne,semester);
+        String expectedResult = courseOne.getCourseName();
+        String actualResult = semester.getSubject(1).getCourseName();
+        assertEquals(expectedResult, actualResult);
+
     }
-    @Test
-    public void addCourseOfferingElective() {
-        assertTrue(johnDoe.addCourseOffering(electiveOne));
-    }
+
     @Test
     public void getUserId() {
         //expected result
@@ -47,6 +48,14 @@ public class ProgramManagerTest {
         String expectedResult = "John Doe";
         // actual result
         String actualResult = johnDoe.getUserName();
+        assertEquals(expectedResult, actualResult);
+    }
+    @Test
+    public void getProgram() {
+        //expected result
+        Program expectedResult = computerScience;
+        // actual result
+        Program actualResult = johnDoe.getProgram();
         assertEquals(expectedResult, actualResult);
     }
 }

@@ -13,7 +13,7 @@ public class StudentTest {
 
     @BeforeClass
     public static void setUp() {
-        informationTechnology = new Program("BP162", "Bachelor of IT");
+        informationTechnology = new Program("BP162", "Bachelor of IT",3);
         student = new Student("s3255654", "John Test", informationTechnology);
     }
 
