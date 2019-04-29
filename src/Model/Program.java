@@ -6,7 +6,6 @@ public class Program {
     private String programId;
     private String programName;
     private int programLengthYears;
-
     private List<Semester> programSem; // allowing program manager to structure the program semesters with different subjects accordingly
 
     public Program(String programId, String programName, int programLengthYears) {
@@ -59,6 +58,14 @@ public class Program {
         for(Semester sem: programSem){
             System.out.println("Semester " + sem.getSemNo() + " Year " + sem.getSemYear());
             sem.printSemesterSubjects();
+        }
+    }
+
+    public void printProgramPrerequisiteChoices(Semester prerequisiteSem) {
+        System.out.println("Prerequisite Options: ");
+        for(int i = 0; i < programSem.indexOf(prerequisiteSem); i++) {
+            System.out.println("Semester " + programSem.get(i).getSemNo() + " Year " + programSem.get(i).getSemYear());
+            programSem.get(i).printSemesterSubjects();
         }
     }
 

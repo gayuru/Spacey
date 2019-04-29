@@ -1,6 +1,5 @@
 package Model;
 
-import Model.Users.Student;
 
 import java.util.*;
 
@@ -24,7 +23,11 @@ public class Semester {
         return String.valueOf(semIdentifier.charAt(1));
     }
 
-    public String getSemIdentifier() { return semIdentifier; }
+    public String getSemIdentifier() { return semIdentifier;}
+
+    public List<AbstractCourse> getSemesterSubjects() {
+        return semesterSubjects;
+    }
 
     public int getNumSubjects() {
         return numSubjectsAdded;
@@ -34,8 +37,8 @@ public class Semester {
         int num = 1;
         for(AbstractCourse subject : semesterSubjects) {
             if(subject != null) {
-                String courseID = subject.getCourseId();
-                String courseName = subject.getCourseName();
+                String courseID = subject.getSubjectId();
+                String courseName = subject.getSubjectName();
                 System.out.println(num + ") " + courseID +" : " + courseName);
                 num++;
             }
@@ -51,8 +54,39 @@ public class Semester {
 
     public void addSubjectSem(AbstractCourse subject) {
         if(numSubjectsAdded < MAX_NUM_COURSES_IN_SEM) {
-            semesterSubjects.set(numSubjectsAdded,subject);
-            numSubjectsAdded++;
+            if(!checkSubjectExist(subject)) {
+                semesterSubjects.set(numSubjectsAdded,subject);
+                numSubjectsAdded++;
+            }
         }
     }
+
+    private boolean checkSubjectExist(AbstractCourse subject) {
+        for(AbstractCourse sub : semesterSubjects) {
+            if(sub != null) {
+                if(sub.getSubjectId().toUpperCase().equals(subject.getSubjectId().toUpperCase())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public AbstractCourse findSubject(String subjectID, boolean isFindingPrerequisite) {
+        for(AbstractCourse sub : semesterSubjects) {
+            if(sub != null) {
+                if(sub.getSubjectId().toUpperCase().equals(subjectID.toUpperCase())) {
+                    if(!isFindingPrerequisite) {
+                        if(semIdentifier.equals("s1y1")) {
+                            return new Course("s1y1", "s1y1Subject");
+                        }
+                    }
+                    return sub;
+                }
+            }
+        }
+        return null;
+    }
+
+
 }

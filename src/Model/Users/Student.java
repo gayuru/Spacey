@@ -19,14 +19,18 @@ public class Student extends User {
         program.generateSemesters(studentSem);
     }
 
-    public void enrolSubject(String semIdentifier, AbstractCourse subject) {
+    public boolean enrolSubject(String semIdentifier, AbstractCourse subject) {
         if(subject != null) {
             for(Semester sem : studentSem) {
                 if(sem.getSemIdentifier().equals(semIdentifier)) {
-                    sem.addSubjectSem(subject);
+                    if(!checkStudentEnrolledExisting(sem, subject)) {
+                        sem.addSubjectSem(subject);
+                        return true;
+                    }
                 }
             }
         }
+        return false;
     }
 
     public void printEnrolledSubjects() {
@@ -35,6 +39,17 @@ public class Student extends User {
             System.out.println("Semester " + sem.getSemNo() + " Year " + sem.getSemYear());
             sem.printSemesterSubjects();
         }
+    }
+
+    private boolean checkStudentEnrolledExisting(Semester sem, AbstractCourse subject) {
+        for(AbstractCourse sub : sem.getSemesterSubjects()) {
+            if(sub != null) {
+                if(sub.getSubjectId().toUpperCase().equals(subject.getSubjectId().toUpperCase())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override

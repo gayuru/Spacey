@@ -1,14 +1,9 @@
 package Model;
 
-import Model.*;
 import Model.Users.ProgramManager;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.*;
@@ -103,9 +98,9 @@ public class SemesterTest {
         //actions
         semester.addSubjectSem(courseOne);
         //expected result
-        String expectedResult = courseOne.getCourseName();
+        String expectedResult = courseOne.getSubjectName();
         // actual result
-        String actualResult = semester.getSubject(1).getCourseName();
+        String actualResult = semester.getSubject(1).getSubjectName();
         assertEquals(expectedResult, actualResult);
     }
 }

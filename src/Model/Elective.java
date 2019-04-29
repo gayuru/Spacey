@@ -6,12 +6,12 @@ public class Elective extends AbstractCourse {
     }
 
     @Override
-    public String getCourseId() {
-        return super.getCourseId();
+    public String getSubjectId() {
+        return super.getSubjectId();
     }
 
     @Override
-    public String getCourseName() {
-        return super.getCourseName();
+    public String getSubjectName() {
+        return super.getSubjectName();
     }
 }

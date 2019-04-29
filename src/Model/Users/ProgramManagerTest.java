@@ -2,9 +2,7 @@ package Model.Users;
 import Model.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.*;
 
@@ -27,8 +25,8 @@ public class ProgramManagerTest {
     @Test
     public void addCourseOffering() {
         johnDoe.addCourseOffering(courseOne,semester);
-        String expectedResult = courseOne.getCourseName();
-        String actualResult = semester.getSubject(1).getCourseName();
+        String expectedResult = courseOne.getSubjectName();
+        String actualResult = semester.getSubject(1).getSubjectName();
         assertEquals(expectedResult, actualResult);
 
     }
