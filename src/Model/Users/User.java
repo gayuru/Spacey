@@ -1,8 +1,9 @@
 package Model.Users;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class User {
+public abstract class User implements Serializable {
     private String userId;
     private String userName;
 

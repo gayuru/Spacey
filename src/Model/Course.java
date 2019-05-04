@@ -1,6 +1,8 @@
 package Model;
 
-public class Course extends AbstractCourse {
+import java.io.Serializable;
+
+public class Course extends AbstractCourse implements Serializable {
 
     public Course(String courseId, String courseName) {
         super(courseId, courseName);

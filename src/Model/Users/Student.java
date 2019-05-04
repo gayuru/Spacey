@@ -4,10 +4,11 @@ import Model.AbstractCourse;
 import Model.Program;
 import Model.Semester;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends User {
+public class Student extends User implements Serializable {
 
     private Program program;
     private List<Semester> studentSem; // student enrolled subjects in each sem

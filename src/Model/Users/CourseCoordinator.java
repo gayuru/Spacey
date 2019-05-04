@@ -2,7 +2,9 @@ package Model.Users;
 
 import Model.Course;
 
-public class CourseCoordinator extends User{
+import java.io.Serializable;
+
+public class CourseCoordinator extends User implements Serializable {
 
     public CourseCoordinator(String userId, String userName) {
         super(userId, userName);

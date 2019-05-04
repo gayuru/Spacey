@@ -1,6 +1,8 @@
 package Model;
 
-public class Elective extends AbstractCourse {
+import java.io.Serializable;
+
+public class Elective extends AbstractCourse implements Serializable {
     public Elective(String courseId, String courseName, String courseSemester) {
         super(courseId, courseName);
     }

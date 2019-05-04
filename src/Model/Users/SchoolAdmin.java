@@ -4,7 +4,9 @@ import Model.AbstractCourse;
 import Model.Course;
 import Model.Elective;
 
-public class SchoolAdmin extends User{
+import java.io.Serializable;
+
+public class SchoolAdmin extends User implements Serializable {
 
     public SchoolAdmin(String userId, String userName) {
         super(userId, userName);

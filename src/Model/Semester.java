@@ -1,9 +1,10 @@
 package Model;
 
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Semester {
+public class Semester implements Serializable {
     private List<AbstractCourse> semesterSubjects;
     private String semIdentifier; // Format: s1y1
     public static final int MAX_NUM_COURSES_IN_SEM = 4;

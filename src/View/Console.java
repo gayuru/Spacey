@@ -5,29 +5,32 @@ import Model.Course;
 import Model.Program;
 import Model.Semester;
 import Model.Users.*;
+import Model.FileHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 
 
-public class Console {
+public class Console implements Serializable {
     private Scanner scanner = new Scanner(System.in);
     private int choice;
     private Program computerScience = new Program("BP0964", "Bachelor of Computer Science", 3);
     private Program informationTechnology = new Program("BP162", "Bachelor of Information Technology", 3);
-    private Student student = new Student("s123", "John Appleseed", computerScience);
+//    private Student student = new Student("s123", "John Appleseed", computerScience);
     private ProgramManager computerSciencepm = new ProgramManager("e123", "Bob", computerScience);
     private ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack", informationTechnology);
     private SchoolAdmin schoolAdmin = new SchoolAdmin("a123", "Sally");
     private CourseCoordinator courseCoordinator = new CourseCoordinator("c123", "Bob");
+    private FileHandler fileHandler = new FileHandler();
 
     private List<Student> students = new ArrayList<>();
     private List<ProgramManager> programManager = new ArrayList<>();
     private List<Program> allPrograms = new ArrayList<>();
 
     public void run() {
-        students.add(student);
+//        students.add(student);
         programManager.add(computerSciencepm);
         programManager.add(informationTechnologypm);
         if (!allPrograms.contains(computerScience)) {
@@ -36,9 +39,12 @@ public class Console {
         if (!allPrograms.contains(informationTechnology)) {
             allPrograms.add(informationTechnology);
         }
+        students = fileHandler.readStudents();
+        fileHandler.saveStudents((ArrayList<Student>) students);
         System.out.println("Welcome User. Please log in (Enter your staff/student id) :");
 
         String userType = scanner.nextLine();
+
 
         if (userType.contains("e")) {
             ProgramManager pm = returnProgramManager(userType);

@@ -1,9 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractCourse {
+public abstract class AbstractCourse implements Serializable {
     private String subjectId;
     private String subjectName;
     public final int MAX_COURSE_CREDIT_POINTS = 12;

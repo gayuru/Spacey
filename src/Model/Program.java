@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Program {
+public class Program implements Serializable {
     private String programId;
     private String programName;
     private int programLengthYears;
