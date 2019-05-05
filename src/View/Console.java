@@ -45,9 +45,9 @@ public class Console implements Serializable {
         students = fileHandler.readStudents();
 
         programManager = fileHandler.readProgramManagers();
-        fileHandler.saveStudents((ArrayList<Student>) students);
-        fileHandler.saveProgramManagers((ArrayList<ProgramManager>) programManager);
-        fileHandler.savePrograms((ArrayList<Program>)allPrograms);
+//        fileHandler.saveStudents((ArrayList<Student>) students);
+//        fileHandler.saveProgramManagers((ArrayList<ProgramManager>) programManager);
+  //      fileHandler.savePrograms((ArrayList<Program>)allPrograms);
         System.out.println("Welcome User. Please log in (Enter your staff/student id) :");
 
         String userType = scanner.nextLine();
@@ -91,7 +91,7 @@ public class Console implements Serializable {
                 userFound = true;
             }
         }
-        if (userFound = false) {
+        if (userFound == false) {
             System.out.println("User ID : " + s + " not found");
         }
         return st;

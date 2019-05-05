@@ -10,11 +10,7 @@ public class FileHandler {
 
     public void saveStudents(ArrayList<Student> students) {
         try {
-
-
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("students.txt"));
-
-
             out.writeObject(students);
             out.close();
         } catch (IOException ex) {
