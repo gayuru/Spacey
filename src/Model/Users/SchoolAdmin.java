@@ -49,7 +49,7 @@ public class SchoolAdmin extends User implements Serializable {
     };
 
     private void createCustomProgram(){
-        System.out.println("Enter program Id: ");
+        System.out.println("Enter program Id  : ");
         String programId = scanner.nextLine();
         System.out.println("Enter program name: ");
         String programName = scanner.nextLine();
