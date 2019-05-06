@@ -38,11 +38,6 @@ public class Program implements Serializable {
     }
 
 
-
-
-
-
-
     public int getNumSubjects() {
         int count = 0;
         for(Semester sem: programSem){

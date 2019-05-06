@@ -12,10 +12,11 @@ public class Main {
 //        console.run();
 
         SchoolAdmin sa = new SchoolAdmin("e123","Bill");
-        sa.createProgram("CS");
+//        sa.createProgram("CS");
+//
+//        sa.createProgram("SE");
 
         sa.createProgram("SE");
-
     }
 
 }

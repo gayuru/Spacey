@@ -57,11 +57,32 @@ public class SchoolAdmin extends User implements Serializable {
         int years = Integer.parseInt(scanner.nextLine());
         programs.add(new Program(programId,programName,years));
 
-        for (Program program : programs){
-            System.out.println(program.toString());
-        }
 
-        
+        System.out.println("Enter number of courses to add: ");
+        int num = Integer.parseInt(scanner.nextLine());
+        int i = 1;
+        while (i<num){
+            System.out.println("Enter Course Id: ");
+            String courseId = scanner.nextLine();
+            System.out.println("Enter Course Name: ");
+            String courseName = scanner.nextLine();
+            System.out.println("Is it a Core Course or Elective: (Y/N)");
+            String course = scanner.nextLine().toUpperCase();
+            boolean flag = course.equals("Y");
+            if(flag){
+                program.addCourses(new Course(courseId,courseName,true));
+            }else{
+                program.addCourses(new Elective(courseId,courseName,false));
+            }
+            i++;
+        }
+        printCustomProgram();
+    }
+
+    private void printCustomProgram(){
+        for (AbstractCourse course : program.getCourses()){
+            System.out.println(course.toString());
+        }
     }
 
 
