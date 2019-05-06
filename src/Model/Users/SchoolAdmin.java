@@ -8,17 +8,20 @@ import Model.Program;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class SchoolAdmin extends User implements Serializable {
     private List<Program> programs;
+    private Program program;
+    private Scanner scanner;
 
-    public SchoolAdmin(String userId, String userName) {
+    public SchoolAdmin(String userId, String userName){
         super(userId, userName);
-        programs = new ArrayList<>();
-
+        this.programs = new ArrayList<>();
+        this.scanner = new Scanner(System.in);
     }
 
-    private void createProgram(String programName){
+    public void createProgram(String programName){
 
         switch(programName){
             case "CS":
@@ -34,9 +37,26 @@ public class SchoolAdmin extends User implements Serializable {
     }
 
     private void createCSProgram(){
-        
+        program = new Program("BP094","Bachelor of Compuetr Science",4);
 
     }
+
+    private void createITProgram(){};
+
+    private void createCustomProgram(){
+        System.out.println("Enter program Id: ");
+        String programId = scanner.nextLine();
+        System.out.println("Enter program name: ");
+        String programName = scanner.nextLine();
+        System.out.println("Enter number of years: ");
+        int years = Integer.parseInt(scanner.nextLine());
+        programs.add(new Program(programId,programName,years));
+
+        for (Program program : programs){
+            System.out.println(program.toString());
+        }
+    }
+
 
   /*
 
@@ -76,13 +96,13 @@ public class SchoolAdmin extends User implements Serializable {
    */
 
 
-    public void setCoreCourse(Course course) {
-        course.setBoolCoreCourse(true);
-    }
-
-    public void setSchoolElective(Elective elective) {
-        elective.setBoolCoreCourse(false);
-    }
+//    public void setCoreCourse(Course course) {
+//        course.setBoolCoreCourse(true);
+//    }
+//
+//    public void setSchoolElective(Elective elective) {
+//        elective.setBoolCoreCourse(false);
+//    }
 
     public void setPrerequisites(AbstractCourse selectedSub, AbstractCourse prerequisite) {
         selectedSub.getCoursePrerequisites().add(prerequisite);
