@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Course extends AbstractCourse implements Serializable {
 
-    public Course(String courseId, String courseName) {
-        super(courseId, courseName);
+    public Course(String courseId, String courseName,boolean boolCoreCourse ) {
+        super(courseId, courseName,boolCoreCourse);
     }
 
     @Override
@@ -18,4 +18,13 @@ public class Course extends AbstractCourse implements Serializable {
         return super.getSubjectName();
     }
 
+    @Override
+    public boolean getBoolCoreCourse() {
+        return super.getBoolCoreCourse();
+    }
+
+    @Override
+    public void setBoolCoreCourse(boolean boolCoreCourse) {
+        super.setBoolCoreCourse(boolCoreCourse);
+    }
 }

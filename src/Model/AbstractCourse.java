@@ -7,12 +7,14 @@ import java.util.List;
 public abstract class AbstractCourse implements Serializable {
     private String subjectId;
     private String subjectName;
+    private boolean boolCoreCourse;
     public final int MAX_COURSE_CREDIT_POINTS = 12;
     private List<AbstractCourse> prerequisites = new ArrayList<>();
 
-    public AbstractCourse(String subjectId, String subjectName) {
+    public AbstractCourse(String subjectId, String subjectName,boolean boolCoreCourse) {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
+        this.boolCoreCourse = boolCoreCourse;
     }
 
     public String getSubjectId() {
@@ -21,6 +23,12 @@ public abstract class AbstractCourse implements Serializable {
 
     public String getSubjectName() {
         return subjectName;
+    }
+
+    public boolean getBoolCoreCourse(){ return boolCoreCourse; }
+
+    public void setBoolCoreCourse(boolean boolCoreCourse) {
+        this.boolCoreCourse = boolCoreCourse;
     }
 
     public List<AbstractCourse> getCoursePrerequisites() {

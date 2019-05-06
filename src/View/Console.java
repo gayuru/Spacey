@@ -30,9 +30,11 @@ public class Console implements Serializable {
     private List<Program> allPrograms = new ArrayList<>();
 
     public void run() {
+
         students.add(student);
         programManager.add(computerSciencepm);
         programManager.add(informationTechnologypm);
+
         if (!allPrograms.contains(computerScience)) {
             allPrograms.add(computerScience);
         }
@@ -51,7 +53,6 @@ public class Console implements Serializable {
         System.out.println("Welcome User. Please log in (Enter your staff/student id) :");
 
         String userType = scanner.nextLine();
-
 
         if (userType.contains("e")) {
             ProgramManager pm = returnProgramManager(userType);
@@ -150,7 +151,7 @@ public class Console implements Serializable {
                 System.out.println("Enter Course Name: ");
                 String courseName = scanner.nextLine();
                 if (choice <= numOfSems && choice > 0) {
-                    pm.addCourseOffering(new Course(courseID, courseName), pm.getProgram().getAllSemesters().get(choice - 1));
+                    pm.addCourseOffering(new Course(courseID, courseName,true), pm.getProgram().getAllSemesters().get(choice - 1));
                 } else {
                     System.out.println("Invalid Option!");
                 }

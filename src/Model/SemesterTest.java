@@ -19,8 +19,8 @@ public class SemesterTest {
     @BeforeClass
     public static void setUp() {
         computerScience = new Program("BP160", "Bachelors of Computer Science", 3);
-        courseOne = new Course("COSC1242", "Intro To Programming");
-        courseTwo = new Course("COSC1232", "Programming 1");
+        courseOne = new Course("COSC1242", "Intro To Programming",true);
+        courseTwo = new Course("COSC1232", "Programming 1",true);
         johnDoe = new ProgramManager("e123456", "John Doe", computerScience);
 
     }

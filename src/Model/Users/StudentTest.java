@@ -56,8 +56,8 @@ semOne = new Semester("s1y1");
     @Test
     public void enrolDuplicateCourse(){
 
-        pm.addCourseOffering(new Course("COC123","SADI"),semOne);
-        pm.addCourseOffering(new Course("COC12333","UCD"),semOne);
+        pm.addCourseOffering(new Course("COC123","SADI",true),semOne);
+        pm.addCourseOffering(new Course("COC12333","UCD",true),semOne);
 
         assertTrue(student.enrolSubject(semOne.getSemIdentifier(), semOne.getSubject(1)));
         assertFalse(student.enrolSubject(semOne.getSemIdentifier(), semOne.getSubject(1)));

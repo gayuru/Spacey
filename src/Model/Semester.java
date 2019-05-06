@@ -79,7 +79,7 @@ public class Semester implements Serializable {
                 if(sub.getSubjectId().toUpperCase().equals(subjectID.toUpperCase())) {
                     if(!isFindingPrerequisite) {
                         if(semIdentifier.equals("s1y1")) {
-                            return new Course("s1y1", "s1y1Subject");
+                            return new Course("s1y1", "s1y1Subject",sub.getBoolCoreCourse());
                         }
                     }
                     return sub;
