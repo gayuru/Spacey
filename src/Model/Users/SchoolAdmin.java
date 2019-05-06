@@ -55,13 +55,14 @@ public class SchoolAdmin extends User implements Serializable {
         String programName = scanner.nextLine();
         System.out.println("Enter number of years: ");
         int years = Integer.parseInt(scanner.nextLine());
-        programs.add(new Program(programId,programName,years));
+        Program program = new Program(programId,programName,years);
+        programs.add(program);
 
 
         System.out.println("Enter number of courses to add: ");
         int num = Integer.parseInt(scanner.nextLine());
         int i = 1;
-        while (i<num){
+        while (i<=num){
             System.out.println("Enter Course Id: ");
             String courseId = scanner.nextLine();
             System.out.println("Enter Course Name: ");
@@ -80,8 +81,8 @@ public class SchoolAdmin extends User implements Serializable {
     }
 
     private void printCustomProgram(){
-        for (AbstractCourse course : program.getCourses()){
-            System.out.println(course.toString());
+        for(Program program  : programs){
+            System.out.println(program.getCourses().toString());
         }
     }
 
