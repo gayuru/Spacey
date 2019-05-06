@@ -3,7 +3,7 @@ package Model;
 import java.io.Serializable;
 
 public class Elective extends AbstractCourse implements Serializable {
-    public Elective(String courseId, String courseName, String courseSemester,boolean boolCoreCourse) {
+    public Elective(String courseId, String courseName,boolean boolCoreCourse) {
         super(courseId, courseName,boolCoreCourse);
     }
 

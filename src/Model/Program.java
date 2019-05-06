@@ -8,12 +8,14 @@ public class Program implements Serializable {
     private String programName;
     private int programLengthYears;
     private List<Semester> programSem; // allowing program manager to structure the program semesters with different subjects accordingly
+    private List<AbstractCourse> courses;
 
     public Program(String programId, String programName, int programLengthYears) {
         this.programId = programId;
         this.programName = programName;
         this.programLengthYears = programLengthYears;
         programSem = new ArrayList<>();
+        courses = new ArrayList<>();
         generateSemesters(programSem);
     }
 
@@ -28,6 +30,18 @@ public class Program implements Serializable {
     public List<Semester> getAllSemesters(){
         return this.programSem;
     }
+
+    public void addCourses(AbstractCourse course){
+
+        courses.add(course);
+
+    }
+
+
+
+
+
+
 
     public int getNumSubjects() {
         int count = 0;
@@ -68,6 +82,10 @@ public class Program implements Serializable {
             System.out.println("Semester " + programSem.get(i).getSemNo() + " Year " + programSem.get(i).getSemYear());
             programSem.get(i).printSemesterSubjects();
         }
+    }
+
+    public List<AbstractCourse> getCourses(){
+        return this.courses;
     }
 
     @Override

@@ -22,7 +22,6 @@ public class SchoolAdmin extends User implements Serializable {
     }
 
     public void createProgram(String programName){
-
         switch(programName){
             case "CS":
                 createCSProgram();
@@ -37,11 +36,17 @@ public class SchoolAdmin extends User implements Serializable {
     }
 
     private void createCSProgram(){
-        program = new Program("BP094","Bachelor of Compuetr Science",4);
+        program = new Program("BP094","Bachelor of Computer Science",3);
+        programs.add(program);
+        populateCourses(program);
 
     }
 
-    private void createITProgram(){};
+    private void createITProgram(){
+        program = new Program("BP162","Bachelor of Information Technology",3);
+        programs.add(program);
+        populateCourses(program);
+    };
 
     private void createCustomProgram(){
         System.out.println("Enter program Id: ");
@@ -55,8 +60,31 @@ public class SchoolAdmin extends User implements Serializable {
         for (Program program : programs){
             System.out.println(program.toString());
         }
+
+        
     }
 
+
+    private void populateCourses(Program program){
+
+        program.addCourses(new Course("COSC192","User Centered Design",true));
+        program.addCourses(new Course("COSC132","Further Programming",true));
+        program.addCourses(new Course("COSC332","Intro to Systems",true));
+        program.addCourses(new Course("COSC254","Advanced Programming Techniques",true));
+        program.addCourses(new Course("COSC222","Algorithms Analysis",true));
+        program.addCourses(new Course("COSC118","Software Engineering Fundamentals",true));
+        program.addCourses(new Course("COSC154","Web Programming",true));
+
+        program.addCourses(new Elective("COSC993","Security Systems",false));
+        program.addCourses(new Elective("COSC913","Web Systems",false));
+        program.addCourses(new Elective("COSC943","Games and Graphics",false));
+        program.addCourses(new Elective("COSC090","Mobile Computing",false));
+        program.addCourses(new Elective("COSC004","Data Science",false));
+        program.addCourses(new Elective("COSC121","iOS Programming",false));
+        program.addCourses(new Elective("COSC987","Games Design",false));
+        program.addCourses(new Elective("COSC570","Artificial Intelligence (AI)",false));
+
+    }
 
   /*
 
