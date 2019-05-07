@@ -44,7 +44,7 @@ public class SchoolAdmin extends User implements Serializable {
         program = new Program("BP162","Bachelor of Information Technology",3);
         programs.add(program);
         populateCourses(program);
-    };
+    }
 
 //    private void createCustomProgram(){
 //        System.out.println("Enter program Id  : ");

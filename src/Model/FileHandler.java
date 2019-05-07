@@ -3,6 +3,8 @@ package Model;
 import Model.Users.*;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class FileHandler implements Serializable {
@@ -20,7 +22,7 @@ public class FileHandler implements Serializable {
     }
 
     public List<User> readUsers()  {
-        List<User> users = null;
+        List<User> users = new ArrayList<>();
 
        try {
 
@@ -40,17 +42,30 @@ public class FileHandler implements Serializable {
     }
 
     public void savePrograms(List<Program> programs) {
+        byte[] bytes = new byte[0];
         try {
-
-
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("programs.dat"));
-
-
-            out.writeObject(programs);
-            out.close();
-        } catch (IOException ex) {
-            System.err.println("File Not Found");
+            bytes = Files.readAllBytes(Paths.get("programs.dat"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        String s = new String(bytes);
+
+        // Check if the name is contained
+        for (Program program : programs) {
+            if (s.contains(program.getProgramId())) {
+                System.out.println("Name already present!");
+            } else {
+                System.out.println("Name not present");
+                try {
+                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("programs.dat"));
+                    out.writeObject(programs);
+                    out.close();
+                } catch (IOException ex) {
+                    System.err.println("File Not Found");
+                }
+            }
+        }
+
     }
 
     public ArrayList<Program> readPrograms() {

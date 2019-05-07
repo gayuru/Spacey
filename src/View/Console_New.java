@@ -2,6 +2,7 @@ package View;
 
 import Model.*;
 import Model.Users.*;
+import javafx.concurrent.ScheduledService;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,22 +13,22 @@ import java.util.*;
 
 public class Console_New implements Serializable {
     private FileHandler handler;
-    private List<User> users = new ArrayList<>();
+    private List<User> users;
     private List<AbstractCourse> courses = new ArrayList<>();
-    private List<Program> programs = new ArrayList<>();
+    private List<Program> programs;
     private List<Semester> semesters = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private int choice;
 
     public Console_New() {
         this.handler = new FileHandler();
-        populate();
         this.users = handler.readUsers();
+        this.programs = handler.readPrograms();
     }
 
 
     public void run() {
-
+        populate();
         System.out.println("Welcome User. Please log in (Enter your staff/student id) :");
 
         String userType = scanner.nextLine();
@@ -54,7 +55,7 @@ public class Console_New implements Serializable {
                 System.exit(0);
             }
             System.out.println("Welcome School Admin " + sa.getUserName());
-           schoolAdminMenu();
+           schoolAdminMenu(sa);
         } else if (userType.startsWith("c")) {
             CourseCoordinator cc = (CourseCoordinator) returnUser(userType);
             if (cc == null) {
@@ -84,7 +85,7 @@ public class Console_New implements Serializable {
 
     private void populate() {
         Program computerScience = new Program("BP0964", "Bachelor of Computer Science", 3);
-        Program informationTechnology = new Program("BP162", "Bachelor of Information Technology", 3);
+        Program informationTechnology = new Program("BP162", "Bachelor of Iss nformation Technology", 3);
         Student student = new Student("s123", "John Appleseed", computerScience);
         ProgramManager computerSciencepm = new ProgramManager("e123", "Bob", computerScience);
         ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack", informationTechnology);
@@ -98,11 +99,14 @@ public class Console_New implements Serializable {
         users.add(courseCoordinator);
         handler.saveUsers(users);
 
-        Program programOne = new Program("BP0964","Bachelor of Computer Science",3);
-        Program programTwo = new Program("BP0922","Bachelor of Information Technology",3);
+//        Program programOne = new Program("BP0964","Bachelor of Computer Science",3);
+//        Program programTwo = new Program("BP0922","Bachelor of Information Technology",3);
 
-        programs.add(programOne);
-        programs.add(programTwo);
+        programs.add(computerScience);
+        programs.add(informationTechnology);
+
+
+
         handler.savePrograms(programs);
 
     }
@@ -184,73 +188,84 @@ public class Console_New implements Serializable {
         run();
     }
 
-    private void schoolAdminMenu() {
+    private void schoolAdminMenu(SchoolAdmin sa) {
         do {
-            System.out.println("1) Set Core Course\n" +
-                    "2) Set School Electives\n" + "3) Set Prerequisites For Subject\n" + "4) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
+            System.out.println("1) Create Program\n" +"2) View Programs\n" + "3) Set Prerequisites For Subject\n" + "4) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
             choice = Integer.parseInt(scanner.nextLine());
-            if (choice == 1) {
-
-
-
-            } else if (choice == 2) {
-
-
-
-
-
-
-
-                
-            } else if (choice == 3) {
-                System.out.println("Choose a program : ");
-                int numPrograms = 1;
-                for (Program program : programs) {
-                    System.out.println(numPrograms + ") " + program.getProgramName());
-                    numPrograms++;
-                }
-                choice = Integer.parseInt(scanner.nextLine());
-                if (choice <= numPrograms && choice > 0) {
-                    AbstractCourse selectedSub = null;
-                    Semester selectedSem = null;
-                    Program chosenProgram = programs.get(choice - 1);
-                    chosenProgram.printProgramSubjects();
-                    System.out.println("Enter Subject ID To Set Prerequisite For Subject (Sem1Year1 Subjects Are Not Allowed To Have Prerequisites) : ");
-                    String subjectID = scanner.nextLine();
-                    for (Semester sem : chosenProgram.getAllSemesters()) {
-                        if (sem.findSubject(subjectID, false) != null) {
-                            selectedSub = sem.findSubject(subjectID, false);
-                            selectedSem = sem;
-                        }
+            switch (choice){
+                case 1:
+                    
+                    break;
+                case 2:
+                    for (Program p : programs){
+                        System.out.println(p.toString());
                     }
-                    if (selectedSub != null) {
-                        if (selectedSub.getSubjectId().equals("s1y1")) {
-                            System.out.println("Unable to Select Semester 1 Year 1 Subject");
-                        } else {
-                            chosenProgram.printProgramPrerequisiteChoices(selectedSem);
-                            //A course can only have one prerequisite and the prerequisite can be stated as one from a group
-                            System.out.println("Enter Subject ID From Prerequisite Options : ");
-                            String prerequisiteID = scanner.nextLine();
-                            for (int i = 0; i < chosenProgram.getAllSemesters().indexOf(selectedSem); i++) {
-                                if (chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true) != null) {
-                                    AbstractCourse prerequisite = chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true);
-                                   // schoolAdmin.setPrerequisites(selectedSub, prerequisite);
-                                }
-                            }
-                        }
-                    } else {
-                        if (selectedSub == null) {
-                            System.out.println("No Subjects with ID Of " + subjectID);
-                        }
-                    }
-                }
-            } else if (choice == 4) {
-                break;
-            } else {
-                System.exit(0);
+
+//                    for(User u : users){
+//                        System.out.println(u.toString());
+//                    }
             }
+
+
+//            if (choice == 1) {
+//
+//            } else if (choice == 2) {
+//
+//
+//
+//
+//
+//
+//
+//                
+//            } else if (choice == 3) {
+//                System.out.println("Choose a program : ");
+//                int numPrograms = 1;
+//                for (Program program : programs) {
+//                    System.out.println(numPrograms + ") " + program.getProgramName());
+//                    numPrograms++;
+//                }
+//                choice = Integer.parseInt(scanner.nextLine());
+//                if (choice <= numPrograms && choice > 0) {
+//                    AbstractCourse selectedSub = null;
+//                    Semester selectedSem = null;
+//                    Program chosenProgram = programs.get(choice - 1);
+//                    chosenProgram.printProgramSubjects();
+//                    System.out.println("Enter Subject ID To Set Prerequisite For Subject (Sem1Year1 Subjects Are Not Allowed To Have Prerequisites) : ");
+//                    String subjectID = scanner.nextLine();
+//                    for (Semester sem : chosenProgram.getAllSemesters()) {
+//                        if (sem.findSubject(subjectID, false) != null) {
+//                            selectedSub = sem.findSubject(subjectID, false);
+//                            selectedSem = sem;
+//                        }
+//                    }
+//                    if (selectedSub != null) {
+//                        if (selectedSub.getSubjectId().equals("s1y1")) {
+//                            System.out.println("Unable to Select Semester 1 Year 1 Subject");
+//                        } else {
+//                            chosenProgram.printProgramPrerequisiteChoices(selectedSem);
+//                            //A course can only have one prerequisite and the prerequisite can be stated as one from a group
+//                            System.out.println("Enter Subject ID From Prerequisite Options : ");
+//                            String prerequisiteID = scanner.nextLine();
+//                            for (int i = 0; i < chosenProgram.getAllSemesters().indexOf(selectedSem); i++) {
+//                                if (chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true) != null) {
+//                                    AbstractCourse prerequisite = chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true);
+//                                   // schoolAdmin.setPrerequisites(selectedSub, prerequisite);
+//                                }
+//                            }
+//                        }
+//                    } else {
+//                        if (selectedSub == null) {
+//                            System.out.println("No Subjects with ID Of " + subjectID);
+//                        }
+//                    }
+//                }
+//            } else if (choice == 4) {
+//                break;
+//            } else {
+//                System.exit(0);
+//            }
         } while (choice != 0);
-        run();
     }
 
 
