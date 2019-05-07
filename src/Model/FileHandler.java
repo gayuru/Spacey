@@ -10,7 +10,7 @@ public class FileHandler {
 
     public void saveStudents(ArrayList<Student> students) {
         try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("students.txt"));
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("students.dat"));
             out.writeObject(students);
             out.close();
         } catch (IOException ex) {
@@ -21,7 +21,7 @@ public class FileHandler {
     public ArrayList<Student> readStudents()  {
         ArrayList<Student> students = new ArrayList<Student>();
        try {
-           ObjectInputStream in = new ObjectInputStream(new FileInputStream("students.txt"));
+           ObjectInputStream in = new ObjectInputStream(new FileInputStream("students.dat"));
 
            students = (ArrayList<Student>) in.readObject();
 
@@ -42,7 +42,7 @@ public class FileHandler {
         try {
 
 
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("programs.txt"));
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("programs.dat"));
 
 
             out.writeObject(programs);
@@ -55,7 +55,7 @@ public class FileHandler {
     public ArrayList<Program> readPrograms() {
         ArrayList<Program> programs = new ArrayList<Program>();
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("programs.txt"));
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("programs.dat"));
 
             programs = (ArrayList<Program>) in.readObject();
 
@@ -74,7 +74,7 @@ public class FileHandler {
         try {
 
 
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("programManagers.txt"));
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("programManagers.dat"));
 
 
             out.writeObject(programManagers);
@@ -87,7 +87,7 @@ public class FileHandler {
     public ArrayList<ProgramManager> readProgramManagers() {
         ArrayList<ProgramManager> programManagers = new ArrayList<ProgramManager>();
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("programManagers.txt"));
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("programManagers.dat"));
 
             programManagers = (ArrayList<ProgramManager>) in.readObject();
 
