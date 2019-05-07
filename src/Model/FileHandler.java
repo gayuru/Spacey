@@ -3,42 +3,43 @@ package Model;
 import Model.Users.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class FileHandler {
+public class FileHandler implements Serializable {
 
-    public void saveStudents(ArrayList<Student> students) {
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("students.dat"));
-            out.writeObject(students);
-            out.close();
-        } catch (IOException ex) {
-            System.err.println("File Not Found");
+    public void saveUsers(List<User> users) {
+        try
+        {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.dat"));
+            oos.writeObject(users);
+            oos.close();
+            System.out.println("File saved");
+        }catch(IOException ioe) {
+            ioe.printStackTrace();
         }
     }
 
-    public ArrayList<Student> readStudents()  {
-        ArrayList<Student> students = new ArrayList<Student>();
+    public List<User> readUsers()  {
+        List<User> users = null;
+
        try {
-           ObjectInputStream in = new ObjectInputStream(new FileInputStream("students.dat"));
 
-           students = (ArrayList<Student>) in.readObject();
+           FileInputStream fis = new FileInputStream("users.dat");
+           ObjectInputStream ois = new ObjectInputStream(fis);
 
-           in.close();
+           users = (List<User> )ois.readObject();
+
+           ois.close();
 
        }
-       catch (IOException ex){
+       catch (Exception ex){
            ex.printStackTrace();
        }
-       catch (ClassNotFoundException ex){
-           ex.printStackTrace();
-       }
-        return students;
+        return users;
 
     }
 
-    public void savePrograms(ArrayList<Program> programs) {
+    public void savePrograms(List<Program> programs) {
         try {
 
 

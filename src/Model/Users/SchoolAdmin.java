@@ -13,12 +13,10 @@ import java.util.Scanner;
 public class SchoolAdmin extends User implements Serializable {
     private List<Program> programs;
     private Program program;
-    private Scanner scanner;
 
     public SchoolAdmin(String userId, String userName){
-        super(userId, userName);
+        super(userId,userName);
         this.programs = new ArrayList<>();
-        this.scanner = new Scanner(System.in);
     }
 
     public void createProgram(String programName){
@@ -30,7 +28,7 @@ public class SchoolAdmin extends User implements Serializable {
                 createITProgram();
                 break;
             default:
-                createCustomProgram();
+//                createCustomProgram();
                 break;
         }
     }
@@ -48,37 +46,37 @@ public class SchoolAdmin extends User implements Serializable {
         populateCourses(program);
     };
 
-    private void createCustomProgram(){
-        System.out.println("Enter program Id  : ");
-        String programId = scanner.nextLine();
-        System.out.println("Enter program name: ");
-        String programName = scanner.nextLine();
-        System.out.println("Enter number of years: ");
-        int years = Integer.parseInt(scanner.nextLine());
-        Program program = new Program(programId,programName,years);
-        programs.add(program);
-
-
-        System.out.println("Enter number of courses to add: ");
-        int num = Integer.parseInt(scanner.nextLine());
-        int i = 1;
-        while (i<=num){
-            System.out.println("Enter Course Id: ");
-            String courseId = scanner.nextLine();
-            System.out.println("Enter Course Name: ");
-            String courseName = scanner.nextLine();
-            System.out.println("Is it a Core Course or Elective: (Y/N)");
-            String course = scanner.nextLine().toUpperCase();
-            boolean flag = course.equals("Y");
-            if(flag){
-                program.addCourses(new Course(courseId,courseName,true));
-            }else{
-                program.addCourses(new Elective(courseId,courseName,false));
-            }
-            i++;
-        }
-        printCustomProgram();
-    }
+//    private void createCustomProgram(){
+//        System.out.println("Enter program Id  : ");
+//        String programId = scanner.nextLine();
+//        System.out.println("Enter program name: ");
+//        String programName = scanner.nextLine();
+//        System.out.println("Enter number of years: ");
+//        int years = Integer.parseInt(scanner.nextLine());
+//        Program program = new Program(programId,programName,years);
+//        programs.add(program);
+//
+//
+//        System.out.println("Enter number of courses to add: ");
+//        int num = Integer.parseInt(scanner.nextLine());
+//        int i = 1;
+//        while (i<=num){
+//            System.out.println("Enter Course Id: ");
+//            String courseId = scanner.nextLine();
+//            System.out.println("Enter Course Name: ");
+//            String courseName = scanner.nextLine();
+//            System.out.println("Is it a Core Course or Elective: (Y/N)");
+//            String course = scanner.nextLine().toUpperCase();
+//            boolean flag = course.equals("Y");
+//            if(flag){
+//                program.addCourses(new Course(courseId,courseName,true));
+//            }else{
+//                program.addCourses(new Elective(courseId,courseName,false));
+//            }
+//            i++;
+//        }
+//        printCustomProgram();
+//    }
 
     private void printCustomProgram(){
         for(Program program  : programs){

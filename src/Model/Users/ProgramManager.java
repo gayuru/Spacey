@@ -8,7 +8,7 @@ public class ProgramManager extends User implements Serializable {
     private Program program;
 
     public ProgramManager(String userId, String userName, Program program) {
-        super(userId, userName);
+        super(userId,userName);
         this.program = program;
     }
 
