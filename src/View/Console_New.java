@@ -85,7 +85,7 @@ public class Console_New implements Serializable {
 
     private void populate() {
         Program computerScience = new Program("BP0964", "Bachelor of Computer Science", 3);
-        Program informationTechnology = new Program("BP162", "Bachelor of Iss nformation Technology", 3);
+        Program informationTechnology = new Program("BP162", "Bachelor of Information Technology", 3);
         Student student = new Student("s123", "John Appleseed", computerScience);
         ProgramManager computerSciencepm = new ProgramManager("e123", "Bob", computerScience);
         ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack", informationTechnology);
@@ -99,14 +99,8 @@ public class Console_New implements Serializable {
         users.add(courseCoordinator);
         handler.saveUsers(users);
 
-//        Program programOne = new Program("BP0964","Bachelor of Computer Science",3);
-//        Program programTwo = new Program("BP0922","Bachelor of Information Technology",3);
-
         programs.add(computerScience);
         programs.add(informationTechnology);
-
-
-
         handler.savePrograms(programs);
 
     }

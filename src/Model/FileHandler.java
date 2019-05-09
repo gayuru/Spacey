@@ -12,7 +12,7 @@ public class FileHandler implements Serializable {
     public void saveUsers(List<User> users) {
         try
         {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.dat"));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.dat",true));
             oos.writeObject(users);
             oos.close();
             System.out.println("File saved");
@@ -49,27 +49,27 @@ public class FileHandler implements Serializable {
             e.printStackTrace();
         }
         String s = new String(bytes);
-
+        System.out.println(s);
         // Check if the name is contained
-        for (Program program : programs) {
-            if (s.contains(program.getProgramId())) {
-                System.out.println("Name already present!");
-            } else {
-                System.out.println("Name not present");
-                try {
-                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("programs.dat"));
-                    out.writeObject(programs);
-                    out.close();
-                } catch (IOException ex) {
-                    System.err.println("File Not Found");
-                }
-            }
-        }
+//        for (Program program : programs) {
+//            if (s.contains(program.getProgramId())) {
+//                System.out.println("Name already present!");
+//            } else {
+//                System.out.println("Name not present");
+//                try {
+//                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("programs.dat"));
+//                    out.writeObject(programs);
+//                    out.close();
+//                } catch (IOException ex) {
+//                    System.err.println("File Not Found");
+//                }
+//            }
+//        }
 
     }
 
     public ArrayList<Program> readPrograms() {
-        ArrayList<Program> programs = new ArrayList<Program>();
+        ArrayList<Program> programs = new ArrayList<>();
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream("programs.dat"));
 
