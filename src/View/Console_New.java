@@ -206,6 +206,8 @@ public class Console_New implements Serializable {
                     int num = Integer.parseInt(scanner.nextLine());
 
                     addCourses(num,sa,programName);
+                    programs.add(new Program(programId,programName,lengthYears));
+                    handler.savePrograms(programs);
 
                     break;
                 case 2:
@@ -231,18 +233,12 @@ public class Console_New implements Serializable {
                                 programName = program.getProgramName();
                             }
                         }
-                        while(!found){
-                            System.out.println("Program not found! Please enter again:");
-                        }
-
+                        if(found){
                             System.out.println("\nEnter number of courses to add: ");
                             num = Integer.parseInt(scanner.nextLine());
 
                             addCourses(num,sa,programName);
-
-
-                        //call the add course method
-
+                        }
                     }
                     break;
                 case 3:
@@ -314,6 +310,7 @@ public class Console_New implements Serializable {
             j++;
         }
         System.out.println(programName+ " program and "+num + " courses are added successfully !");
+        handler.savePrograms(programs);
     }
 
 
