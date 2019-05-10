@@ -19,6 +19,8 @@ public class Console_New implements Serializable {
     private List<Semester> semesters = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private int choice;
+    private boolean flag;
+    private String programName;
 
     public Console_New() {
         this.handler = new FileHandler();
@@ -183,92 +185,137 @@ public class Console_New implements Serializable {
     }
 
     private void schoolAdminMenu(SchoolAdmin sa) {
+
         do {
-            System.out.println("1) Create Program\n" +"2) View Programs\n" + "3) Set Prerequisites For Subject\n" + "4) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
+            System.out.println("1) Create Program\n" +"2) View Programs & Add Courses\n" + "3) Set Prerequisites For Subject\n" + "4) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
             choice = Integer.parseInt(scanner.nextLine());
             switch (choice){
                 case 1:
                     System.out.println("Enter the Program ID:");
                     String programId = scanner.nextLine();
                     System.out.println("Enter the Program name:");
-                    String programName = scanner.nextLine();
+                     programName = scanner.nextLine();
                     System.out.println("Enter the length of the program:");
                     int lengthYears = Integer.parseInt(scanner.nextLine());
 
-                    sa.createProgram(programName);
+                    sa.createCustomProgram(programId,programName,lengthYears);
+
+                    System.out.println(programName + " program successfully created!");
+
+                    System.out.println("\nEnter number of courses to add: ");
+                    int num = Integer.parseInt(scanner.nextLine());
+
+                    addCourses(num,sa,programName);
 
                     break;
                 case 2:
                     for (Program p : programs){
                         System.out.println(p.toString());
+                        for(AbstractCourse c: p.getCourses()){
+                            System.out.println(c.toString());
+                        }
                     }
 
-//                    for(User u : users){
-//                        System.out.println(u.toString());
-//                    }
+                    System.out.println("Do you wish you to add Courses into any of the programs? (Y/N)");
+                    String inp = scanner.nextLine().toUpperCase();
+                    flag = inp.equals("Y");
+                    if(flag){
+                        System.out.println("Adding Courses into the Program");
+                        System.out.println("-------------------------------");
+                        System.out.println("Enter Program ID:");
+                        inp = scanner.nextLine();
+                        boolean found = false;
+                        for(Program program : programs){
+                            if(inp.equals(program.getProgramId())){
+                                found = true;
+                                programName = program.getProgramName();
+                            }
+                        }
+                        while(!found){
+                            System.out.println("Program not found! Please enter again:");
+                        }
+
+                            System.out.println("\nEnter number of courses to add: ");
+                            num = Integer.parseInt(scanner.nextLine());
+
+                            addCourses(num,sa,programName);
+
+
+                        //call the add course method
+
+                    }
+                    break;
+                case 3:
+                    System.out.println("Choose a program : ");
+                    int numPrograms = 1;
+                    for (Program program : programs) {
+                        System.out.println(numPrograms + ") " + program.getProgramName());
+                        numPrograms++;
+                    }
+                    choice = Integer.parseInt(scanner.nextLine());
+                    if (choice <= numPrograms && choice > 0) {
+                        AbstractCourse selectedSub = null;
+                        Semester selectedSem = null;
+                        Program chosenProgram = programs.get(choice - 1);
+                        chosenProgram.printProgramSubjects();
+                        System.out.println("Enter Subject ID To Set Prerequisite For Subject (Sem1Year1 Subjects Are Not Allowed To Have Prerequisites) : ");
+                        String subjectID = scanner.nextLine();
+                        for (Semester sem : chosenProgram.getAllSemesters()) {
+                            if (sem.findSubject(subjectID, false) != null) {
+                                selectedSub = sem.findSubject(subjectID, false);
+                                selectedSem = sem;
+                            }
+                        }
+                        if (selectedSub != null) {
+                            if (selectedSub.getSubjectId().equals("s1y1")) {
+                                System.out.println("Unable to Select Semester 1 Year 1 Subject");
+                            } else {
+                                chosenProgram.printProgramPrerequisiteChoices(selectedSem);
+                                //A course can only have one prerequisite and the prerequisite can be stated as one from a group
+                                System.out.println("Enter Subject ID From Prerequisite Options : ");
+                                String prerequisiteID = scanner.nextLine();
+                                for (int i = 0; i < chosenProgram.getAllSemesters().indexOf(selectedSem); i++) {
+                                    if (chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true) != null) {
+                                        AbstractCourse prerequisite = chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true);
+                                       // schoolAdmin.setPrerequisites(selectedSub, prerequisite);
+                                    }
+                                }
+                            }
+                        } else {
+                            if (selectedSub == null) {
+                                System.out.println("No Subjects with ID Of " + subjectID);
+                            }
+                        }
+                    }
+
+
             }
-
-
-//            if (choice == 1) {
-//
-//            } else if (choice == 2) {
-//
-//
-//
-//
-//
-//
-//
-//                
-//            } else if (choice == 3) {
-//                System.out.println("Choose a program : ");
-//                int numPrograms = 1;
-//                for (Program program : programs) {
-//                    System.out.println(numPrograms + ") " + program.getProgramName());
-//                    numPrograms++;
-//                }
-//                choice = Integer.parseInt(scanner.nextLine());
-//                if (choice <= numPrograms && choice > 0) {
-//                    AbstractCourse selectedSub = null;
-//                    Semester selectedSem = null;
-//                    Program chosenProgram = programs.get(choice - 1);
-//                    chosenProgram.printProgramSubjects();
-//                    System.out.println("Enter Subject ID To Set Prerequisite For Subject (Sem1Year1 Subjects Are Not Allowed To Have Prerequisites) : ");
-//                    String subjectID = scanner.nextLine();
-//                    for (Semester sem : chosenProgram.getAllSemesters()) {
-//                        if (sem.findSubject(subjectID, false) != null) {
-//                            selectedSub = sem.findSubject(subjectID, false);
-//                            selectedSem = sem;
-//                        }
-//                    }
-//                    if (selectedSub != null) {
-//                        if (selectedSub.getSubjectId().equals("s1y1")) {
-//                            System.out.println("Unable to Select Semester 1 Year 1 Subject");
-//                        } else {
-//                            chosenProgram.printProgramPrerequisiteChoices(selectedSem);
-//                            //A course can only have one prerequisite and the prerequisite can be stated as one from a group
-//                            System.out.println("Enter Subject ID From Prerequisite Options : ");
-//                            String prerequisiteID = scanner.nextLine();
-//                            for (int i = 0; i < chosenProgram.getAllSemesters().indexOf(selectedSem); i++) {
-//                                if (chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true) != null) {
-//                                    AbstractCourse prerequisite = chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true);
-//                                   // schoolAdmin.setPrerequisites(selectedSub, prerequisite);
-//                                }
-//                            }
-//                        }
-//                    } else {
-//                        if (selectedSub == null) {
-//                            System.out.println("No Subjects with ID Of " + subjectID);
-//                        }
-//                    }
-//                }
-//            } else if (choice == 4) {
-//                break;
-//            } else {
-//                System.exit(0);
-//            }
         } while (choice != 0);
     }
+
+
+    private void addCourses(int num,SchoolAdmin sa,String programName){
+        int j = 1;
+        while (j<=num){
+            System.out.println("Enter Course Id: ");
+            String courseId = scanner.nextLine();
+            System.out.println("Enter Course Name: ");
+            String courseName = scanner.nextLine();
+            System.out.println("Is it a Core Course or Elective: (Y/N)");
+            String course = scanner.nextLine().toUpperCase();
+            flag = course.equals("Y");
+            if(flag){
+                sa.addCourses(courseId,courseName,true);
+                System.out.println(courseName + " successfully added into "+programName + " as a Core Course ! \n");
+            }else{
+                sa.addCourses(courseId,courseName,false);
+                System.out.println(courseName + " successfully added into "+programName + " as an Elective! \n");
+            }
+            j++;
+        }
+        System.out.println(programName+ " program and "+num + " courses are added successfully !");
+    }
+
 
 
     private void enrolStudent(Student student) {

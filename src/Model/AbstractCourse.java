@@ -43,6 +43,6 @@ public abstract class AbstractCourse implements Serializable {
 
     @Override
     public String toString() {
-        return "\nCurrent Enrolled Courses:\n" + subjectId +":"+ subjectName;
+        return "\n"+subjectId +":"+ subjectName;
     }
 }

@@ -8,79 +8,41 @@ import Model.Program;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class SchoolAdmin extends User implements Serializable {
     private List<Program> programs;
     private Program program;
+
 
     public SchoolAdmin(String userId, String userName){
         super(userId,userName);
         this.programs = new ArrayList<>();
     }
 
-    public void createProgram(String programName){
-        switch(programName){
-            case "CS":
-                createCSProgram();
-                break;
-            case "IT":
-                createITProgram();
-                break;
-            default:
-//             createCustomProgram();
-                break;
+    public void createCustomProgram(String programId,String programName,int years){
+
+        program = new Program(programId,programName,years);
+        programs.add(program);
+
+    }
+
+
+    public void addCourses(String courseId,String courseName,boolean y){
+
+        if(y){
+            program.addCourses(new Course(courseId,courseName,true));
+        }else {
+            program.addCourses(new Elective(courseId,courseName,false));
         }
-    }
-
-    private void createCSProgram(){
-        program = new Program("BP094","Bachelor of Computer Science",3);
-        programs.add(program);
-        populateCourses(program);
 
     }
 
-    private void createITProgram(){
-        program = new Program("BP162","Bachelor of Information Technology",3);
-        programs.add(program);
-        populateCourses(program);
-    }
 
-//    private void createCustomProgram(){
-//        System.out.println("Enter program Id  : ");
-//        String programId = scanner.nextLine();
-//        System.out.println("Enter program name: ");
-//        String programName = scanner.nextLine();
-//        System.out.println("Enter number of years: ");
-//        int years = Integer.parseInt(scanner.nextLine());
-//        Program program = new Program(programId,programName,years);
-//        programs.add(program);
-//
-//
-//        System.out.println("Enter number of courses to add: ");
-//        int num = Integer.parseInt(scanner.nextLine());
-//        int i = 1;
-//        while (i<=num){
-//            System.out.println("Enter Course Id: ");
-//            String courseId = scanner.nextLine();
-//            System.out.println("Enter Course Name: ");
-//            String courseName = scanner.nextLine();
-//            System.out.println("Is it a Core Course or Elective: (Y/N)");
-//            String course = scanner.nextLine().toUpperCase();
-//            boolean flag = course.equals("Y");
-//            if(flag){
-//                program.addCourses(new Course(courseId,courseName,true));
-//            }else{
-//                program.addCourses(new Elective(courseId,courseName,false));
-//            }
-//            i++;
-//        }
-//        printCustomProgram();
-//    }
 
-    private void printCustomProgram(){
+
+    public void printCustomProgram(){
         for(Program program  : programs){
-            System.out.println(program.getCourses().toString());
+            System.out.println(program.toString()+"\n"+program.getCourses().toString());
         }
     }
 
