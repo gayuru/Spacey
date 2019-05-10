@@ -29,7 +29,7 @@ public class FileHandler implements Serializable {
            FileInputStream fis = new FileInputStream("users.dat");
            ObjectInputStream ois = new ObjectInputStream(fis);
 
-           users = (List<User> )ois.readObject();
+           users = (List<User>)ois.readObject();
 
            ois.close();
 

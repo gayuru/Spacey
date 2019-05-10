@@ -188,7 +188,15 @@ public class Console_New implements Serializable {
             choice = Integer.parseInt(scanner.nextLine());
             switch (choice){
                 case 1:
-                    
+                    System.out.println("Enter the Program ID:");
+                    String programId = scanner.nextLine();
+                    System.out.println("Enter the Program name:");
+                    String programName = scanner.nextLine();
+                    System.out.println("Enter the length of the program:");
+                    int lengthYears = Integer.parseInt(scanner.nextLine());
+
+                    sa.createProgram(programName);
+
                     break;
                 case 2:
                     for (Program p : programs){
