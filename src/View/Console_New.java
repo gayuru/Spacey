@@ -206,6 +206,8 @@ public class Console_New implements Serializable {
                     int num = Integer.parseInt(scanner.nextLine());
 
                     addCourses(num,sa,programName);
+                    programs.add(new Program(programId,programName,lengthYears));
+                    handler.savePrograms(programs);
 
                     break;
                 case 2:
@@ -314,6 +316,7 @@ public class Console_New implements Serializable {
             j++;
         }
         System.out.println(programName+ " program and "+num + " courses are added successfully !");
+        handler.savePrograms(programs);
     }
 
 
