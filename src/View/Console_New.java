@@ -21,6 +21,7 @@ public class Console_New implements Serializable {
     private int choice;
     private boolean flag;
     private String programName;
+    private String programId;
 
     public Console_New() {
         this.handler = new FileHandler();
@@ -94,16 +95,22 @@ public class Console_New implements Serializable {
         SchoolAdmin schoolAdmin = new SchoolAdmin("a123", "Sally");
         CourseCoordinator courseCoordinator = new CourseCoordinator("c123", "Bob");
 
-        users.add(student);
-        users.add(computerSciencepm);
-        users.add(informationTechnologypm);
-        users.add(schoolAdmin);
-        users.add(courseCoordinator);
-        handler.saveUsers(users);
 
-        programs.add(computerScience);
-        programs.add(informationTechnology);
+        handler.saveUsers(users);
         handler.savePrograms(programs);
+        /*
+        * to be called when creating new project to populate data.*/
+          users.add(student);
+           users.add(computerSciencepm);
+           users.add(informationTechnologypm);
+           users.add(schoolAdmin);
+           users.add(courseCoordinator);
+
+        /*
+        *   programs.add(computerScience);
+        *   programs.add(informationTechnology);
+        * */
+
 
     }
 
@@ -115,38 +122,57 @@ public class Console_New implements Serializable {
             System.out.println("0) Exit");
             System.out.println("Enter an option:");
             choice = Integer.parseInt(scanner.nextLine());
-            if (choice == 1) {
-                if (pm.getProgram().getNumSubjects() != 0) {
-                    pm.getProgram().printProgramSubjects();
-                } else {
-                    System.out.println("Proceed to option 2, no courses added");
-                }
-            } else if (choice == 2) {
-                int numOfSems = 1;
-                for (Semester sem : pm.getProgram().getAllSemesters()) {
-                    System.out.println(numOfSems + ")" + "Semester " + sem.getSemNo() + " Year " + sem.getSemYear());
-                    numOfSems++;
-                }
-                System.out.println("Enter an option:");
-                choice = Integer.parseInt(scanner.nextLine());
-                System.out.println("Enter Course ID: ");
-                String courseID = scanner.nextLine();
-                System.out.println("Enter Course Name: ");
-                String courseName = scanner.nextLine();
-                if (choice <= numOfSems && choice > 0) {
-                    pm.addCourseOffering(new Course(courseID, courseName,true), pm.getProgram().getAllSemesters().get(choice - 1));
-                } else {
-                    System.out.println("Invalid Option!");
-                }
-            } else if (choice == 3) {
-                break;
-            } else {
-                System.exit(0);
+            switch (choice){
+                case 1:
+                    viewProgramMenu(pm);
+                    break;
+                case 2:
+                    int numOfSems = 1;
+                    for (Semester sem : pm.getProgram().getAllSemesters()) {
+                        System.out.println(numOfSems + ")" + "Semester " + sem.getSemNo() + " Year " + sem.getSemYear());
+                        numOfSems++;
+                    }
+
+                    System.out.println("Courses for " + pm.getProgram() + " are below: ");
+
+//                    for (AbstractCourse course : programs){
+//                        System.out.println(course);
+//                    }
+
+                    System.out.println("Enter an option:");
+                    choice = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Enter Course ID: ");
+                    String courseID = scanner.nextLine();
+                    System.out.println("Enter Course Name: ");
+                    String courseName = scanner.nextLine();
+                    if (choice <= numOfSems && choice > 0) {
+                        pm.addCourseOffering(new Course(courseID, courseName,true), pm.getProgram().getAllSemesters().get(choice - 1));
+                    } else {
+                        System.out.println("Invalid Option!");
+                    }
+                    break;
             }
-            System.out.println();
+
+//            if (choice == 1) {
+//                if (pm.getProgram().getNumSubjects() != 0) {
+//                    pm.getProgram().printProgramSubjects();
+//                } else {
+//                    System.out.println("Proceed to option 2, no courses added");
+//                }
+//            } else {
+//                System.exit(0);
+//            }
         } while (choice != 0);
         run();
     }
+
+    private void viewProgramMenu(ProgramManager pm){
+        System.out.println(pm.getProgram().toString());
+        for (AbstractCourse course : pm.getProgram().getCourses()){
+            System.out.println(course.toString());
+        }
+    }
+
 
     private void studentMenu(Student st) {
         do {
@@ -192,9 +218,9 @@ public class Console_New implements Serializable {
             switch (choice){
                 case 1:
                     System.out.println("Enter the Program ID:");
-                    String programId = scanner.nextLine();
+                    this.programId = scanner.nextLine();
                     System.out.println("Enter the Program name:");
-                     programName = scanner.nextLine();
+                    this.programName = scanner.nextLine();
                     System.out.println("Enter the length of the program:");
                     int lengthYears = Integer.parseInt(scanner.nextLine());
 
@@ -205,7 +231,7 @@ public class Console_New implements Serializable {
                     System.out.println("\nEnter number of courses to add: ");
                     int num = Integer.parseInt(scanner.nextLine());
 
-                    addCourses(num,sa,programName);
+                    addCourses(num,sa,programId);
                     programs.add(new Program(programId,programName,lengthYears));
                     handler.savePrograms(programs);
 
@@ -230,6 +256,7 @@ public class Console_New implements Serializable {
                         for(Program program : programs){
                             if(inp.equals(program.getProgramId())){
                                 found = true;
+                                programId = program.getProgramId();
                                 programName = program.getProgramName();
                             }
                         }
@@ -240,13 +267,13 @@ public class Console_New implements Serializable {
                             System.out.println("\nEnter number of courses to add: ");
                             num = Integer.parseInt(scanner.nextLine());
 
-                            addCourses(num,sa,programName);
+                            addCourses(num,sa,programId);
 
-
+                            break;
                         //call the add course method
 
                     }
-                    break;
+//                    run();
                 case 3:
                     System.out.println("Choose a program : ");
                     int numPrograms = 1;
@@ -296,27 +323,39 @@ public class Console_New implements Serializable {
     }
 
 
-    private void addCourses(int num,SchoolAdmin sa,String programName){
-        int j = 1;
-        while (j<=num){
-            System.out.println("Enter Course Id: ");
-            String courseId = scanner.nextLine();
-            System.out.println("Enter Course Name: ");
-            String courseName = scanner.nextLine();
-            System.out.println("Is it a Core Course or Elective: (Y/N)");
-            String course = scanner.nextLine().toUpperCase();
-            flag = course.equals("Y");
-            if(flag){
-                sa.addCourses(courseId,courseName,true);
-                System.out.println(courseName + " successfully added into "+programName + " as a Core Course ! \n");
-            }else{
-                sa.addCourses(courseId,courseName,false);
-                System.out.println(courseName + " successfully added into "+programName + " as an Elective! \n");
+    private void addCourses(int num,SchoolAdmin sa,String programId){
+        Program program = null;
+        for(Program program1 : programs){
+            if(program1.getProgramId().equals(programId)){
+                program = program1;
             }
-            j++;
         }
-        System.out.println(programName+ " program and "+num + " courses are added successfully !");
-        handler.savePrograms(programs);
+
+        if(program!=null) {
+            int j = 1;
+            while (j <= num) {
+                System.out.println("Enter Course Id: ");
+                String courseId = scanner.nextLine();
+                System.out.println("Enter Course Name: ");
+                String courseName = scanner.nextLine();
+                System.out.println("Is it a Core Course or Elective: (Y/N)");
+                String course = scanner.nextLine().toUpperCase();
+                flag = course.equals("Y");
+                if (flag) {
+                    sa.addCourses(program,courseId, courseName, true);
+                    System.out.println(courseName + " successfully added into " + programName + " as a Core Course ! \n");
+                    program.addCourses(new Course(courseId,courseName,true));
+                } else {
+                    System.out.println(courseName + " successfully added into " + programName + " as an Elective! \n");
+                    program.addCourses(new Elective(courseId,courseName,false));
+                }
+                j++;
+            }
+
+            System.out.println(programName + " program and " + num + " courses are added successfully !");
+            programs.add(program);
+            handler.savePrograms(programs);
+        }
     }
 
 
