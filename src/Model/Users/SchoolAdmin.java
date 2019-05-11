@@ -27,8 +27,8 @@ public class SchoolAdmin extends User implements Serializable {
     }
 
 
-    public void addCourses(String courseId,String courseName,boolean y){
-
+    public void addCourses(Program program, String courseId,String courseName,boolean y){
+        this.program = program;
         if(y){
             program.addCourses(new Course(courseId,courseName,true));
         }else {
