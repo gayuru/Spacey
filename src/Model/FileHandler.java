@@ -42,14 +42,23 @@ public class FileHandler implements Serializable {
     }
 
     public void savePrograms(List<Program> programs) {
-        byte[] bytes = new byte[0];
-        try {
-            bytes = Files.readAllBytes(Paths.get("programs.dat"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        try
+        {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("programs.dat",true));
+            oos.writeObject(programs);
+            oos.close();
+            System.out.println("File saved");
+        }catch(IOException ioe) {
+            ioe.printStackTrace();
         }
-        String s = new String(bytes);
-        System.out.println(s);
+//        byte[] bytes = new byte[0];
+//        try {
+//            bytes = Files.readAllBytes(Paths.get("programs.dat"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        String s = new String(bytes);
+//        System.out.println(s);
         // Check if the name is contained
 //        for (Program program : programs) {
 //            if (s.contains(program.getProgramId())) {
@@ -72,14 +81,10 @@ public class FileHandler implements Serializable {
         ArrayList<Program> programs = new ArrayList<>();
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream("programs.dat"));
-
             programs = (ArrayList<Program>) in.readObject();
-
             in.close();
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
         return programs;
