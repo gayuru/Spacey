@@ -310,7 +310,7 @@ public class Console_New implements Serializable {
                                 for (int i = 0; i < chosenProgram.getAllSemesters().indexOf(selectedSem); i++) {
                                     if (chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true) != null) {
                                         AbstractCourse prerequisite = chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true);
-                                       // schoolAdmin.setPrerequisites(selectedSub, prerequisite);
+                                       sa.setPrerequisites(selectedSub, prerequisite);
                                     }
                                 }
                             }
