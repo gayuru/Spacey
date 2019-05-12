@@ -18,10 +18,10 @@ public class StudentTest {
     @BeforeClass
     public static void setUp() {
         informationTechnology = new Program("BP162", "Bachelor of IT",3);
-        student = new Student("s3255654", "John Test", informationTechnology);
+        student = new Student("s3255654", "John Test","", informationTechnology);
 semOne = new Semester("s1y1");
 
-        pm = new ProgramManager("E123","Tim Cook",informationTechnology);
+        pm = new ProgramManager("E123","Tim Cook","",informationTechnology);
 
     }
 

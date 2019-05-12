@@ -14,8 +14,8 @@ public class SchoolAdmin extends User implements Serializable {
     private Program program;
 
 
-    public SchoolAdmin(String userId, String userName){
-        super(userId,userName);
+    public SchoolAdmin(String userId, String userName,String password){
+        super(userId,userName,password);
         this.programs = new ArrayList<>();
     }
 

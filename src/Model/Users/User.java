@@ -5,11 +5,13 @@ import java.io.Serializable;
 public abstract class User implements Serializable {
     private String userId;
     private String userName;
+    private String password;
 
 
-    public User(String userId,String userName) {
+    public User(String userId,String userName,String password) {
         this.userId = userId;
         this.userName = userName;
+        this.password = password;
     }
 
     public String getUserId() {
@@ -20,6 +22,9 @@ public abstract class User implements Serializable {
         return userName;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
     @Override
     public String toString() {

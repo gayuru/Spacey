@@ -24,8 +24,8 @@ public class ProgramTest {
         computerScience = new Program("BP160", "Bachelor of Computer Science", 3);
         courseOne = new Course("COSC1242", "Intro To Programming",true);
         electiveOne = new Elective("COSC1111", "Data-Communication and Net-Centric Computing",false);
-        student = new Student("s123456", "John Test", computerScience);
-        johnDoe = new ProgramManager("e123456", "John Doe", computerScience);
+        student = new Student("s123456", "John Test","", computerScience);
+        johnDoe = new ProgramManager("e123456", "John Doe","", computerScience);
         semester = johnDoe.getProgram().getAllSemesters().get(0);
     }
 

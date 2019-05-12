@@ -13,8 +13,8 @@ public class Student extends User implements Serializable {
     private Program program;
     private List<Semester> studentSem; // student enrolled subjects in each sem
 
-    public Student(String userId,String userName, Program program) {
-        super(userId,userName);
+    public Student(String userId,String userName,String password, Program program) {
+        super(userId,userName,password);
         this.program = program;
         studentSem = new ArrayList<>();
         program.generateSemesters(studentSem);

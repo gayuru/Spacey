@@ -4,6 +4,7 @@ import Model.*;
 import Model.Users.*;
 import javafx.concurrent.ScheduledService;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,9 +36,12 @@ public class Console_New implements Serializable {
         System.out.println("Welcome User. Please log in (Enter your staff/student id) :");
 
         String userType = scanner.nextLine();
+        String password ="";
+        System.out.println("Enter password: ");
+        password = scanner.nextLine();
 
         if (userType.startsWith("e")) {
-            ProgramManager pm = (ProgramManager)returnUser(userType);
+            ProgramManager pm = (ProgramManager)returnUser(userType,password);
             if (pm == null) {
                 System.exit(0);
             }
@@ -45,7 +49,7 @@ public class Console_New implements Serializable {
             System.out.println("Program Manager For " + pm.getProgram().getProgramId() + " " + pm.getProgram().getProgramName() + "\n");
             programManagerMenu(pm);
         } else if (userType.startsWith("s")) {
-            Student st = (Student)returnUser(userType);
+            Student st = (Student)returnUser(userType,password);
             if (st == null) {
                 System.exit(0);
             }
@@ -53,14 +57,14 @@ public class Console_New implements Serializable {
             System.out.println("Student Of " + st.getProgram().getProgramId() + " " + st.getProgram().getProgramName() + "\n");
             studentMenu(st);
         } else if (userType.startsWith("a")) {
-            SchoolAdmin sa = (SchoolAdmin) returnUser(userType);
+            SchoolAdmin sa = (SchoolAdmin) returnUser(userType,password);
             if (sa == null) {
                 System.exit(0);
             }
             System.out.println("Welcome School Admin " + sa.getUserName());
            schoolAdminMenu(sa);
         } else if (userType.startsWith("c")) {
-            CourseCoordinator cc = (CourseCoordinator) returnUser(userType);
+            CourseCoordinator cc = (CourseCoordinator) returnUser(userType,password);
             if (cc == null) {
                 System.exit(0);
             }
@@ -70,12 +74,12 @@ public class Console_New implements Serializable {
 
     }
 
-    private User returnUser(String s) {
+    private User returnUser(String s,String password) {
         User user = null;
         Boolean userFound = false;
 
         for (int i = 0; i < users.size(); ++i) {
-            if (users.get(i).getUserId().equals(s)) {
+            if (users.get(i).getUserId().equals(s) && users.get(i).getPassword().equals(password)) {
                 user = users.get(i);
                 userFound = true;
             }
@@ -89,11 +93,11 @@ public class Console_New implements Serializable {
     private void populate() {
         Program computerScience = new Program("BP0964", "Bachelor of Computer Science", 3);
         Program informationTechnology = new Program("BP162", "Bachelor of Information Technology", 3);
-        Student student = new Student("s123", "John Appleseed", computerScience);
-        ProgramManager computerSciencepm = new ProgramManager("e123", "Bob", computerScience);
-        ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack", informationTechnology);
-        SchoolAdmin schoolAdmin = new SchoolAdmin("a123", "Sally");
-        CourseCoordinator courseCoordinator = new CourseCoordinator("c123", "Bob");
+        Student student = new Student("s123", "John Appleseed","", computerScience);
+        ProgramManager computerSciencepm = new ProgramManager("e123", "Bob", "abc123",computerScience);
+        ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack", "abc321",informationTechnology);
+        SchoolAdmin schoolAdmin = new SchoolAdmin("a123", "Sally","sally");
+        CourseCoordinator courseCoordinator = new CourseCoordinator("c123", "Bob","");
 
 
         handler.saveUsers(users);
@@ -269,10 +273,10 @@ public class Console_New implements Serializable {
 
                             addCourses(num,sa,programId);
 
-                            break;
                         //call the add course method
 
                     }
+                    break;
 //                    run();
                 case 3:
                     System.out.println("Choose a program : ");
@@ -316,8 +320,10 @@ public class Console_New implements Serializable {
                             }
                         }
                     }
-
-
+                    break;
+                case 4:
+                    run();
+                    break;
             }
         } while (choice != 0);
     }
@@ -385,6 +391,5 @@ public class Console_New implements Serializable {
             System.out.println("Invalid Option!");
         }
     }
-
 }
 
