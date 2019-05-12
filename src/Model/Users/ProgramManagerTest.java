@@ -3,6 +3,8 @@ import Model.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.*;
 
@@ -12,23 +14,38 @@ public class ProgramManagerTest {
     private static Course courseOne;
     private static Elective electiveOne;
     private static Semester semester;
-    private static ProgramManager johnDoe;
+    private static ProgramManager computerSciencepm;
+    private static List<AbstractCourse> courses;
 
     @BeforeClass
     public static void setUp() {
         computerScience = new Program("BP160", "Bachelors of Computer Science",3);
         courseOne = new Course("COSC1242","Intro To Programming",true);
         electiveOne = new Elective("COSC1111","Data-Communication and Net-Centric Computing",false);
-        johnDoe = new ProgramManager("e123456", "John Doe", computerScience);
+        computerSciencepm = new ProgramManager("e123", "Bob", "abc123",computerScience);
         semester = new Semester("s1y1");
+        computerScience.addCourses(courseOne);
+        courses = computerScience.getCourses();
     }
+
+
     @Test
     public void addCourseOffering() {
-        johnDoe.addCourseOffering(courseOne,semester);
-        String expectedResult = courseOne.getSubjectName();
-        String actualResult = semester.getSubject(1).getSubjectName();
-        assertEquals(expectedResult, actualResult);
+        for (AbstractCourse course : courses){
+            computerSciencepm.addCourseOffering(course,semester);
+        }
 
+        if(computerSciencepm.getProgram().getCourses().size()>1){
+            String expected = courseOne.getSubjectName();
+            for (AbstractCourse course : computerSciencepm.getProgram().getCourses()){
+                String actual = course.getSubjectName();
+                assertEquals(expected,actual);
+            }
+        }else {
+            String expectedResult = courseOne.getSubjectName();
+            String actualResult = computerSciencepm.getProgram().getCourses().get(0).getSubjectName();
+            assertEquals(expectedResult, actualResult);
+        }
     }
 
     @Test
@@ -36,7 +53,7 @@ public class ProgramManagerTest {
         //expected result
         String expectedResult = "e123456";
         // actual result
-        String actualResult = johnDoe.getUserId();
+        String actualResult = computerSciencepm.getUserId();
         assertEquals(expectedResult, actualResult);
     }
 
@@ -45,7 +62,7 @@ public class ProgramManagerTest {
         //expected result
         String expectedResult = "John Doe";
         // actual result
-        String actualResult = johnDoe.getUserName();
+        String actualResult = computerSciencepm.getUserName();
         assertEquals(expectedResult, actualResult);
     }
     @Test
@@ -53,7 +70,7 @@ public class ProgramManagerTest {
         //expected result
         Program expectedResult = computerScience;
         // actual result
-        Program actualResult = johnDoe.getProgram();
+        Program actualResult = computerSciencepm.getProgram();
         assertEquals(expectedResult, actualResult);
     }
 }
