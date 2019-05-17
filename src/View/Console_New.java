@@ -139,9 +139,9 @@ public class Console_New implements Serializable {
 
                     System.out.println("Courses for " + pm.getProgram() + " are below: ");
 
-//                    for (AbstractCourse course : programs){
-//                        System.out.println(course);
-//                    }
+                    for (AbstractCourse course : pm.getProgram().getCourses()){
+                        System.out.println(course);
+                    }
 
                     System.out.println("Enter an option:");
                     choice = Integer.parseInt(scanner.nextLine());
@@ -348,7 +348,7 @@ public class Console_New implements Serializable {
                 String course = scanner.nextLine().toUpperCase();
                 flag = course.equals("Y");
                 if (flag) {
-                    sa.addCourses(program,courseId, courseName, true);
+//                    sa.addCourses(program,courseId, courseName, true);
                     System.out.println(courseName + " successfully added into " + programName + " as a Core Course ! \n");
                     program.addCourses(new Course(courseId,courseName,true));
                 } else {
@@ -359,6 +359,13 @@ public class Console_New implements Serializable {
             }
 
             System.out.println(programName + " program and " + num + " courses are added successfully !");
+            Program program2 = null;
+            for (Program program1 : programs){
+                if(program1.getProgramId().equals(programId)) {
+                    program2 = program1;
+                }
+            }
+            programs.remove(program2);
             programs.add(program);
             handler.savePrograms(programs);
         }

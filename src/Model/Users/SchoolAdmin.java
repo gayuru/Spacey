@@ -23,7 +23,10 @@ public class SchoolAdmin extends User implements Serializable {
 
         program = new Program(programId,programName,years);
         programs.add(program);
+    }
 
+    public List<Program> getPrograms(){
+        return this.programs;
     }
 
 
