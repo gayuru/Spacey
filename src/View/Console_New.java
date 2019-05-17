@@ -260,14 +260,13 @@ public class Console_New implements Serializable {
                     int lengthYears = Integer.parseInt(scanner.nextLine());
 
                     sa.createCustomProgram(programId,programName,lengthYears);
-
+                    programs.add(new Program(programId,programName,lengthYears));
                     System.out.println(programName + " program successfully created!");
 
                     System.out.println("\nEnter number of courses to add: ");
                     int num = Integer.parseInt(scanner.nextLine());
 
                     addCourses(num,sa,programId);
-                    programs.add(new Program(programId,programName,lengthYears));
                     handler.savePrograms(programs);
 
                     break;
