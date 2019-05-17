@@ -15,7 +15,7 @@ import java.util.*;
 public class Console_New implements Serializable {
     private FileHandler handler;
     private List<User> users;
-    private List<AbstractCourse> courses = new ArrayList<>();
+    private List<AbstractCourse> subjects = new ArrayList<>();
     private List<Program> programs;
     private List<Semester> semesters = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
@@ -69,7 +69,7 @@ public class Console_New implements Serializable {
                 System.exit(0);
             }
             System.out.println("Welcome Course Coordinator " + cc.getUserName());
-           courseCoordinatorMenu();
+           courseCoordinatorMenu(cc);
         }
 
     }
@@ -198,13 +198,44 @@ public class Console_New implements Serializable {
         run();
     }
 
-    private void courseCoordinatorMenu() {
+    private void courseCoordinatorMenu(CourseCoordinator courseCoordinator) {
         do {
             System.out.println("1) Waive Prerequisite\n" + "2) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
 
             choice = Integer.parseInt(scanner.nextLine());
 
             if (choice == 1) {
+                boolean foundValidStudent = false;
+                Student selectedStudent = null;
+                System.out.println("Enter a valid Student ID: ");
+                String studentID = scanner.nextLine();
+                for(User user : users) {//TODO: check all student IDs in an arraylist of students in order to validate entered studentID
+                    if(studentID.equals(user.getUserId())) {
+                        foundValidStudent = true;
+                        selectedStudent = (Student) user;
+                    }
+                }
+                if(foundValidStudent) {
+                    boolean foundValidSubject = false;
+                    AbstractCourse selectedSubject = null;
+                    System.out.println("Enter a valid Subject ID: ");
+                    String subjectID = scanner.nextLine();
+                    for(AbstractCourse subject : subjects) {//TODO: prepopulate with subjects of dummy data
+                        if(subjectID.equals(subject.getSubjectId())) {
+                            foundValidSubject = true;
+                            selectedSubject = subject;
+                        }
+                    }
+                    if(foundValidSubject) {
+                        courseCoordinator.waivePrerequisite(selectedStudent, selectedSubject);
+                    } else {
+                        System.out.println("Invalid Subject ID! Returning To Main Menu");
+                        courseCoordinatorMenu(courseCoordinator);
+                    }
+                } else {
+                    System.out.println("Invalid Student ID! Returning To Main Menu");
+                    courseCoordinatorMenu(courseCoordinator);
+                }
             } else if (choice == 2) {
                 break;
             } else {

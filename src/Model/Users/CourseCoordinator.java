@@ -1,5 +1,6 @@
 package Model.Users;
 
+import Model.AbstractCourse;
 import Model.Course;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ public class CourseCoordinator extends User implements Serializable {
         super(userId,userName,password);
     }
 
-    public void waivePrerequisite(Student student, Course coreCourse) {
+    public void waivePrerequisite(Student student, AbstractCourse subject) {
 
     }
 }
