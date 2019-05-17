@@ -120,6 +120,7 @@ public class Console_New implements Serializable {
 
     private void programManagerMenu(ProgramManager pm) {
         do {
+            handler.readPrograms();
             System.out.println("1) View Program");
             System.out.println("2) Add course offerings to Program");
             System.out.println("3) Return to Main Menu");
@@ -172,10 +173,17 @@ public class Console_New implements Serializable {
 
     private void viewProgramMenu(ProgramManager pm){
         System.out.println(pm.getProgram().toString());
-        for (AbstractCourse course : pm.getProgram().getCourses()){
-            System.out.println(course.toString());
+
+        Program currProgram = pm.getProgram();
+        for (Program curr : handler.readPrograms()){
+            if (curr.getProgramId().equals(currProgram.getProgramId())) {
+                for(AbstractCourse course: curr.getCourses()){
+                    System.out.println(course.toString());
+                }
+            }
         }
     }
+
 
 
     private void studentMenu(Student st) {
@@ -395,6 +403,7 @@ public class Console_New implements Serializable {
                     program2 = program1;
                 }
             }
+
             programs.remove(program2);
             programs.add(program);
             handler.savePrograms(programs);

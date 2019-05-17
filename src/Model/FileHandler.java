@@ -45,6 +45,9 @@ public class FileHandler implements Serializable {
         try
         {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("programs.dat",true));
+            for(Program pr:programs){
+                pr.getCourses().toString();
+            }
             oos.writeObject(programs);
             oos.close();
             System.out.println("File saved");
@@ -77,11 +80,11 @@ public class FileHandler implements Serializable {
 
     }
 
-    public ArrayList<Program> readPrograms() {
-        ArrayList<Program> programs = new ArrayList<>();
+    public List<Program> readPrograms() {
+        List<Program> programs = new ArrayList<>();
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream("programs.dat"));
-            programs = (ArrayList<Program>) in.readObject();
+            programs = (List<Program>) in.readObject();
             in.close();
 
         } catch (IOException | ClassNotFoundException ex) {
