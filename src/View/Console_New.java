@@ -212,34 +212,29 @@ public class Console_New implements Serializable {
 
             choice = Integer.parseInt(scanner.nextLine());
 
+            //Check whether student is in the arraylist
+            //Check whether student has enrolled in a subject
+            //Print all enrolled subjects if Student checks has passed
+            //Check whether inputted subject is a valid enrolled subject which the student has done
+            //If it is, proceed to delete all the prerequisites of the enrolled subject which the student is doing
             if (choice == 1) {
-                boolean foundValidStudent = false;
-                Student selectedStudent = null;
-                System.out.println("Enter a valid Student ID: ");
-                String studentID = scanner.nextLine();
-                for(User user : users) {//TODO: check all student IDs in an arraylist of students in order to validate entered studentID
-                    if(studentID.equals(user.getUserId())) {
-                        foundValidStudent = true;
-                        selectedStudent = (Student) user;
-                    }
-                }
-                if(foundValidStudent) {
-                    boolean foundValidSubject = false;
+                Student selectedStudent = getSelectStudent();
+                if(selectedStudent != null && selectedStudent.hasEnrolledSubjects()) {
                     AbstractCourse selectedSubject = null;
+                    selectedStudent.printEnrolledSubjects();
                     System.out.println("Enter a valid Subject ID: ");
                     String subjectID = scanner.nextLine();
-                    for(AbstractCourse subject : subjects) {//TODO: prepopulate with subjects of dummy data
-                        if(subjectID.equals(subject.getSubjectId())) {
-                            foundValidSubject = true;
-                            selectedSubject = subject;
-                        }
-                    }
-                    if(foundValidSubject) {
-                        courseCoordinator.waivePrerequisite(selectedStudent, selectedSubject);
+                    //TODO: prepopulate with subjects of dummy data
+                    selectedSubject = selectedStudent.findSelectedSubject(subjectID);
+                    if(selectedSubject != null) {
+                        courseCoordinator.waivePrerequisite(selectedSubject);
                     } else {
                         System.out.println("Invalid Subject ID! Returning To Main Menu");
                         courseCoordinatorMenu(courseCoordinator);
                     }
+                } else if(!selectedStudent.hasEnrolledSubjects()) {
+                    System.out.println("Student Has Not Enrolled! Returning To Main Menu");
+                    courseCoordinatorMenu(courseCoordinator);
                 } else {
                     System.out.println("Invalid Student ID! Returning To Main Menu");
                     courseCoordinatorMenu(courseCoordinator);
@@ -252,6 +247,20 @@ public class Console_New implements Serializable {
         } while (choice != 0);
         run();
     }
+
+    private Student getSelectStudent() {
+        Student selectedStudent = null;
+        System.out.println("Enter a valid Student ID: ");
+        String studentID = scanner.nextLine();
+        for(User user : users) {//TODO: check all student IDs in an arraylist of students in order to validate entered studentID
+            if(studentID.equals(user.getUserId())) {
+                selectedStudent = (Student) user;
+            }
+        }
+        return selectedStudent;
+    }
+
+
 
     private void schoolAdminMenu(SchoolAdmin sa) {
 

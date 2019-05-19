@@ -11,7 +11,7 @@ public class CourseCoordinator extends User implements Serializable {
         super(userId,userName,password);
     }
 
-    public void waivePrerequisite(Student student, AbstractCourse subject) {
-
+    public void waivePrerequisite(AbstractCourse subject) {
+        subject.getCoursePrerequisites().clear();
     }
 }

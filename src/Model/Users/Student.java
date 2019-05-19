@@ -34,12 +34,36 @@ public class Student extends User implements Serializable {
         return false;
     }
 
+    public boolean hasEnrolledSubjects() {
+        boolean isStudentEnrolled = false;
+        for(Semester sem : studentSem) {
+            if(!sem.getSemesterSubjects().isEmpty()) {
+                isStudentEnrolled = true;
+            }
+        }
+        return isStudentEnrolled;
+    }
+
     public void printEnrolledSubjects() {
         System.out.println("Student: " + super.getUserId() + " " + super.getUserName() + " " + program.getProgramName());
         for(Semester sem: studentSem){
             System.out.println("Semester " + sem.getSemNo() + " Year " + sem.getSemYear());
             sem.printSemesterSubjects();
         }
+    }
+
+    public AbstractCourse findSelectedSubject(String selectedSubID) {
+        AbstractCourse selectedSubject = null;
+        for(Semester sem: studentSem) {
+            for(AbstractCourse sub : sem.getSemesterSubjects()) {
+                if(sub != null) {
+                    if(sub.getSubjectId().toUpperCase().equals(selectedSubID)) {
+                        selectedSubject = sub;
+                    }
+                }
+            }
+        }
+        return selectedSubject;
     }
 
     private boolean checkStudentEnrolledExisting(Semester sem, AbstractCourse subject) {
