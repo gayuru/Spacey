@@ -12,6 +12,9 @@ public class ProgramManager extends User implements Serializable {
         this.program = program;
     }
 
+    public void setProgram(Program program) {
+        this.program = program;
+    }
 
     public void addCourseOffering(AbstractCourse course, Semester sem){
         sem.addSubjectSem(course);

@@ -15,7 +15,7 @@ public class FileHandler implements Serializable {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.dat",true));
             oos.writeObject(users);
             oos.close();
-            System.out.println("File saved");
+            System.out.println("Users Saved");
         }catch(IOException ioe) {
             ioe.printStackTrace();
         }
@@ -25,14 +25,12 @@ public class FileHandler implements Serializable {
         List<User> users = new ArrayList<>();
 
        try {
-
            FileInputStream fis = new FileInputStream("users.dat");
            ObjectInputStream ois = new ObjectInputStream(fis);
 
            users = (List<User>)ois.readObject();
 
            ois.close();
-
        }
        catch (Exception ex){
            ex.printStackTrace();
@@ -44,13 +42,14 @@ public class FileHandler implements Serializable {
     public void savePrograms(List<Program> programs) {
         try
         {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("programs.dat",true));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("programs.dat",false));
+            System.out.println("Saving Programs");
             for(Program pr:programs){
-                pr.getCourses().toString();
+                System.out.println(pr.getCourses().toString());
             }
             oos.writeObject(programs);
             oos.close();
-            System.out.println("File saved");
+            System.out.println("Programs Saved");
         }catch(IOException ioe) {
             ioe.printStackTrace();
         }
@@ -82,17 +81,19 @@ public class FileHandler implements Serializable {
 
     public List<Program> readPrograms() {
         List<Program> programs = new ArrayList<>();
+
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("programs.dat"));
+            ObjectInputStream  in = new ObjectInputStream(new FileInputStream("programs.dat"));
             programs = (List<Program>) in.readObject();
             in.close();
-
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
+
         }
         return programs;
 
     }
+
 
     public void saveProgramManagers(ArrayList<ProgramManager> programManagers) {
         try {

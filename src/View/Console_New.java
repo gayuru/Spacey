@@ -25,14 +25,22 @@ public class Console_New implements Serializable {
     private String programId;
 
     public Console_New() {
+        startUp();
+    }
+
+    private void startUp(){
         this.handler = new FileHandler();
         this.users = handler.readUsers();
         this.programs = handler.readPrograms();
+
+        //populate only if they are null to avoid duplicate issues
+        if(this.users.size() == 0 || this.programs.size() == 0){
+            populate();
+        }
     }
 
 
     public void run() {
-        populate();
         System.out.println("Welcome User. Please log in (Enter your staff/student id) :");
 
         String userType = scanner.nextLine();
@@ -98,29 +106,37 @@ public class Console_New implements Serializable {
         ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack", "abc321",informationTechnology);
         SchoolAdmin schoolAdmin = new SchoolAdmin("a123", "Sally","sally");
         CourseCoordinator courseCoordinator = new CourseCoordinator("c123", "Bob","");
+        Elective electiveOne = new Elective("COSC123","SADI",true);
 
+        //computerScience.addCourses(electiveOne);
 
+        programs.add(computerScience);
+        programs.add(informationTechnology);
+
+        users.add(student);
+        users.add(computerSciencepm);
+        users.add(informationTechnologypm);
+        users.add(schoolAdmin);
+        users.add(courseCoordinator);
+
+        System.out.println("Populating the system");
         handler.saveUsers(users);
         handler.savePrograms(programs);
         /*
         * to be called when creating new project to populate data.*/
-          users.add(student);
-           users.add(computerSciencepm);
-           users.add(informationTechnologypm);
-           users.add(schoolAdmin);
-           users.add(courseCoordinator);
-
-        /*
-        *   programs.add(computerScience);
-        *   programs.add(informationTechnology);
-        * */
-
 
     }
 
     private void programManagerMenu(ProgramManager pm) {
         do {
             handler.readPrograms();
+            //update the object of the program manager
+            for(Program pr : programs){
+                if(pr.getProgramId().equals(pm.getProgram().getProgramId())){
+                    pm.setProgram(pr);
+                }
+            }
+
             System.out.println("1) View Program");
             System.out.println("2) Add course offerings to Program");
             System.out.println("3) Return to Main Menu");
@@ -189,7 +205,7 @@ public class Console_New implements Serializable {
     private void studentMenu(Student st) {
         do {
             System.out.println("1) Enrol Course\n" +
-                    "2) View Enrolled Courses\n" + "3) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
+                    "2) View Enrolled Courses\n" +"3) Show program map\n" + "4) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
 
             choice = Integer.parseInt(scanner.nextLine());
 
@@ -197,7 +213,9 @@ public class Console_New implements Serializable {
                 enrolStudent(st);
             } else if (choice == 2) {
                 st.printEnrolledSubjects();
-            } else if (choice == 3) {
+            } else if (choice ==3){
+                st.showStudentMap();
+            } else if (choice == 4) {
                 break;
             } else {
                 System.exit(0);
@@ -261,7 +279,6 @@ public class Console_New implements Serializable {
     }
 
 
-
     private void schoolAdminMenu(SchoolAdmin sa) {
 
         do {
@@ -283,8 +300,9 @@ public class Console_New implements Serializable {
                     System.out.println("\nEnter number of courses to add: ");
                     int num = Integer.parseInt(scanner.nextLine());
 
-                    addCourses(num,sa,programId);
                     handler.savePrograms(programs);
+                    addCourses(num,sa,programId);
+
 
                     break;
                 case 2:

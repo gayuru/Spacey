@@ -1,8 +1,6 @@
 package Model.Users;
 
-import Model.AbstractCourse;
-import Model.Program;
-import Model.Semester;
+import Model.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +17,68 @@ public class Student extends User implements Serializable {
         studentSem = new ArrayList<>();
         program.generateSemesters(studentSem);
     }
+
+    public void showStudentMap(){
+        testing();
+        StringBuilder strCore = new StringBuilder();
+        StringBuilder strElective = new StringBuilder();
+
+        System.out.println("Student's enrolled Program : "+ this.program.toString());
+        System.out.println("---------------------------");
+
+        for(int i =0;i<studentSem.size();i++){
+            System.out.println("Year "+studentSem.get(i).getSemYear() + " Semester " + studentSem.get(i).getSemNo());
+
+            //classifies the core courses and the electives
+            for(AbstractCourse crNew: this.getProgram().getAllSemesters().get(i).getSemesterSubjects()){
+                if(crNew !=null){
+                    if(crNew.getBoolCoreCourse()){
+                        strCore.append(crNew.toString());
+                    }else{
+                        strElective.append(crNew.toString());
+                    }
+                }
+
+            }
+            //prints out the core Courses
+            System.out.println("\n• Core Courses;"+ strCore.toString());
+            if(!strElective.toString().equals("")){
+                System.out.println("\n• Electives;" + strElective.toString());
+            }
+
+
+//            for(AbstractCourse cr: studentSem.get(i).getSemesterSubjects()){
+//               if(cr != null) {
+//                   System.out.println(cr.toString());
+//               }
+//            }
+            System.out.println("\n-----------------------\n");
+        }
+
+    }
+
+        //delete this after testing
+        public void testing(){
+            ProgramManager test = new ProgramManager("e949","Testing PM","123",this.program);
+
+            //this.program.addCourses(new Course("COSC192","User Centered Design",true));
+            program.getAllSemesters().get(0).addSubjectSem(new Course("COSC192","User Centered Design",true));
+            program.getAllSemesters().get(0).addSubjectSem(new Course("COSC132","Further Programming",false));
+
+            test.addCourseOffering(new Course("COSC192","User Centered Design",true),new Semester("s1y1"));
+            test.addCourseOffering(new Course("COSC132","Further Programming",true),new Semester("s1y1"));
+            test.addCourseOffering(new Course("COSC332","Intro to Systems",true),new Semester("s1y1"));
+            test.addCourseOffering(new Course("COSC254","Advanced Programming Techniques",true),new Semester("s1y1"));
+            test.addCourseOffering(new Course("COSC222","Algorithms Analysis",true),new Semester("s1y1"));
+
+            test.addCourseOffering(new Course("COSC192","User Centered Design",true),new Semester("s2y1"));
+            test.addCourseOffering(new Course("COSC132","Further Programming",true),new Semester("s2y1"));
+            test.addCourseOffering(new Course("COSC332","Intro to Systems",true),new Semester("s2y1"));
+            test.addCourseOffering(new Course("COSC254","Advanced Programming Techniques",true),new Semester("s2y1"));
+            test.addCourseOffering(new Course("COSC222","Algorithms Analysis",true),new Semester("s2y1"));
+
+        }
+
 
     public boolean enrolSubject(String semIdentifier, AbstractCourse subject) {
         if(subject != null) {
