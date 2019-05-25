@@ -34,7 +34,7 @@ public class Console_New implements Serializable {
         this.programs = handler.readPrograms();
 
         //populate only if they are null to avoid duplicate issues
-        if(this.users.size() == 0 || this.programs.size() == 0){
+        if(this.users.size() == 0 && this.programs.size() == 0){
             populate();
         }
     }
@@ -131,11 +131,7 @@ public class Console_New implements Serializable {
         do {
             handler.readPrograms();
             //update the object of the program manager
-            for(Program pr : programs){
-                if(pr.getProgramId().equals(pm.getProgram().getProgramId())){
-                    pm.setProgram(pr);
-                }
-            }
+            updateObjectState(pm);
 
             System.out.println("1) View Program");
             System.out.println("2) Add course offerings to Program");
@@ -148,26 +144,31 @@ public class Console_New implements Serializable {
                     viewProgramMenu(pm);
                     break;
                 case 2:
-                    int numOfSems = 1;
-                    for (Semester sem : pm.getProgram().getAllSemesters()) {
-                        System.out.println(numOfSems + ")" + "Semester " + sem.getSemNo() + " Year " + sem.getSemYear());
-                        numOfSems++;
-                    }
-
-                    System.out.println("Courses for " + pm.getProgram() + " are below: ");
-
+                    System.out.println("\nCourses for " + pm.getProgram().getProgramName() + " are below;");
                     for (AbstractCourse course : pm.getProgram().getCourses()){
                         System.out.println(course);
                     }
+                    System.out.println();
+                    int numOfSems = 1;
+                    for (Semester sem : pm.getProgram().getAllSemesters()) {
+                        System.out.println(numOfSems + ") " + "Semester " + sem.getSemNo() + " Year " + sem.getSemYear());
+                        numOfSems++;
+                    }
 
-                    System.out.println("Enter an option:");
+                    System.out.println("Enter the selected Semester:");
                     choice = Integer.parseInt(scanner.nextLine());
-                    System.out.println("Enter Course ID: ");
-                    String courseID = scanner.nextLine();
-                    System.out.println("Enter Course Name: ");
-                    String courseName = scanner.nextLine();
+
+                    //valid
                     if (choice <= numOfSems && choice > 0) {
-                        pm.addCourseOffering(new Course(courseID, courseName,true), pm.getProgram().getAllSemesters().get(choice - 1));
+                        System.out.println("Enter Course ID of the Course to add into the Semester: ");
+                        String courseID = scanner.nextLine();
+                        //returns null if the course doesnt exist
+                        AbstractCourse course = courseExists(courseID,pm.getProgram());
+                        if(course != null){
+                            pm.addCourseOffering(course, pm.getProgram().getAllSemesters().get(choice - 1));
+                        }else{
+                            System.out.println("\nCourse Doesn't exist in the Program!");
+                        }
                     } else {
                         System.out.println("Invalid Option!");
                     }
@@ -187,10 +188,22 @@ public class Console_New implements Serializable {
         run();
     }
 
+    private AbstractCourse courseExists(String courseId,Program pr){
+        AbstractCourse cr =null;
+        for(AbstractCourse c: pr.getCourses()){
+            if(courseId.equals(c.getSubjectId())){
+                cr = c;
+            }
+        }
+        return cr;
+    }
+
     private void viewProgramMenu(ProgramManager pm){
         System.out.println(pm.getProgram().toString());
 
         Program currProgram = pm.getProgram();
+        System.out.println("------------------");
+        System.out.println("Courses in "+currProgram.getProgramName()+";");
         for (Program curr : handler.readPrograms()){
             if (curr.getProgramId().equals(currProgram.getProgramId())) {
                 for(AbstractCourse course: curr.getCourses()){
@@ -200,7 +213,20 @@ public class Console_New implements Serializable {
         }
     }
 
-
+private void updateObjectState(User u){
+    //updates the state of the object to the one in the readFile
+    for(Program pr : programs){
+        if(u instanceof ProgramManager){
+            if(pr.getProgramId().equals(((ProgramManager)u).getProgram().getProgramId())){
+                ((ProgramManager)u).setProgram(pr);
+            }
+        }else if(u instanceof  Student){
+            if(pr.getProgramId().equals(((Student)u).getProgram().getProgramId())){
+                ((Student)u).setProgram(pr);
+            }
+        }
+    }
+}
 
     private void studentMenu(Student st) {
         do {
@@ -208,6 +234,14 @@ public class Console_New implements Serializable {
                     "2) View Enrolled Courses\n" +"3) Show program map\n" + "4) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
 
             choice = Integer.parseInt(scanner.nextLine());
+
+            updateObjectState(st);
+
+            for(User u: users){
+                if(st.getUserId().equals(u.getUserId())){
+                    st = (Student)u;
+                }
+            }
 
             if (choice == 1) {
                 enrolStudent(st);
@@ -459,6 +493,18 @@ public class Console_New implements Serializable {
                 int courseChoice = Integer.parseInt(scanner.nextLine());
 
                 student.enrolSubject(student.getProgram().getAllSemesters().get(choice - 1).getSemIdentifier(), student.getProgram().getAllSemesters().get(choice - 1).getSubject(courseChoice));
+
+                User u2 =null;
+                for (User u : users){
+                    if(u.getUserId().equals(student.getUserId())) {
+                        u2 = u;
+                    }
+                }
+
+                users.remove(u2);
+                users.add(student);
+                handler.saveUsers(users);
+
             }
         } else {
             System.out.println("Invalid Option!");

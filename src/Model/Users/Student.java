@@ -19,7 +19,7 @@ public class Student extends User implements Serializable {
     }
 
     public void showStudentMap(){
-        testing();
+        //testing();
         StringBuilder strCore = new StringBuilder();
         StringBuilder strElective = new StringBuilder();
 
@@ -102,6 +102,10 @@ public class Student extends User implements Serializable {
             }
         }
         return isStudentEnrolled;
+    }
+
+    public void setProgram(Program program) {
+        this.program = program;
     }
 
     public void printEnrolledSubjects() {

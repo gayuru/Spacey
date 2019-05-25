@@ -12,7 +12,7 @@ public class FileHandler implements Serializable {
     public void saveUsers(List<User> users) {
         try
         {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.dat",true));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.dat",false));
             oos.writeObject(users);
             oos.close();
             System.out.println("Users Saved");
