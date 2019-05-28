@@ -58,6 +58,9 @@ public class Semester implements Serializable {
             if(!checkSubjectExist(subject)) {
                 semesterSubjects.set(numSubjectsAdded,subject);
                 numSubjectsAdded++;
+                System.out.println(subject.getSubjectName()+" added successfully to " + this.getSemIdentifier());
+            }else{
+                System.out.println(subject.toString() + " already exists in the semester!\n");
             }
         }
     }

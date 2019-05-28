@@ -2,22 +2,16 @@ package View;
 
 import Model.*;
 import Model.Users.*;
-import javafx.concurrent.ScheduledService;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.*;
+import java.util.Scanner;
 
 public class Console_New implements Serializable {
+
     private FileHandler handler;
     private List<User> users;
-    private List<AbstractCourse> subjects = new ArrayList<>();
     private List<Program> programs;
-    private List<Semester> semesters = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private int choice;
     private boolean flag;
@@ -28,72 +22,72 @@ public class Console_New implements Serializable {
         startUp();
     }
 
-    private void startUp(){
+    private void startUp() {
         this.handler = new FileHandler();
         this.users = handler.readUsers();
         this.programs = handler.readPrograms();
 
         //populate only if they are null to avoid duplicate issues
-        if(this.users.size() == 0 && this.programs.size() == 0){
+        if (this.users.size() == 0 && this.programs.size() == 0) {
             populate();
         }
     }
-
 
     public void run() {
         System.out.println("Welcome User. Please log in (Enter your staff/student id) :");
 
         String userType = scanner.nextLine();
-        String password ="";
+        String password = "";
         System.out.println("Enter password: ");
         password = scanner.nextLine();
 
         if (userType.startsWith("e")) {
-            ProgramManager pm = (ProgramManager)returnUser(userType,password);
+            ProgramManager pm = (ProgramManager) returnUser(userType, password);
             if (pm == null) {
-                System.exit(0);
+                System.out.println("\nΔ Username / Password Invalid!\nΔ Please Log in again!");
+                run();
             }
             System.out.println("Welcome " + pm.getUserName());
             System.out.println("Program Manager For " + pm.getProgram().getProgramId() + " " + pm.getProgram().getProgramName() + "\n");
             programManagerMenu(pm);
         } else if (userType.startsWith("s")) {
-            Student st = (Student)returnUser(userType,password);
+            Student st = (Student) returnUser(userType, password);
             if (st == null) {
-                System.exit(0);
+                System.out.println("\nΔ Username / Password Invalid!\nΔ Please Log in again!");
+                run();
             }
             System.out.println("Welcome " + st.getUserName());
             System.out.println("Student Of " + st.getProgram().getProgramId() + " " + st.getProgram().getProgramName() + "\n");
             studentMenu(st);
         } else if (userType.startsWith("a")) {
-            SchoolAdmin sa = (SchoolAdmin) returnUser(userType,password);
+            SchoolAdmin sa = (SchoolAdmin) returnUser(userType, password);
             if (sa == null) {
-                System.exit(0);
+                System.out.println("\nΔ Username / Password Invalid!\nΔ Please Log in again!");
+                run();
             }
             System.out.println("Welcome School Admin " + sa.getUserName());
-           schoolAdminMenu(sa);
+            schoolAdminMenu(sa);
         } else if (userType.startsWith("c")) {
-            CourseCoordinator cc = (CourseCoordinator) returnUser(userType,password);
+            CourseCoordinator cc = (CourseCoordinator) returnUser(userType, password);
             if (cc == null) {
-                System.exit(0);
+                System.out.println("\nΔ Username / Password Invalid!\nΔ Please Log in again!");
+                run();
             }
             System.out.println("Welcome Course Coordinator " + cc.getUserName());
-           courseCoordinatorMenu(cc);
+            courseCoordinatorMenu(cc);
+        } else {
+            System.out.println("\nΔ Username / Password Invalid!\nΔ Please Log in again!");
+            run();
         }
 
     }
 
-    private User returnUser(String s,String password) {
+    private User returnUser(String s, String password) {
         User user = null;
-        Boolean userFound = false;
-
         for (int i = 0; i < users.size(); ++i) {
             if (users.get(i).getUserId().equals(s) && users.get(i).getPassword().equals(password)) {
                 user = users.get(i);
-                userFound = true;
             }
-        }
-        if (userFound == false) {
-            System.out.println("User ID : " + s + " not found");
         }
         return user;
     }
@@ -101,11 +95,11 @@ public class Console_New implements Serializable {
     private void populate() {
         Program computerScience = new Program("BP0964", "Bachelor of Computer Science", 3);
         Program informationTechnology = new Program("BP162", "Bachelor of Information Technology", 3);
-        Student student = new Student("s123", "John Appleseed","", computerScience);
-        ProgramManager computerSciencepm = new ProgramManager("e123", "Bob", "abc123",computerScience);
-        ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack", "abc321",informationTechnology);
-        SchoolAdmin schoolAdmin = new SchoolAdmin("a123", "Sally","sally");
-        CourseCoordinator courseCoordinator = new CourseCoordinator("c123", "Bob","");
+        Student student = new Student("s123", "John Appleseed", "", computerScience);
+        ProgramManager computerSciencepm = new ProgramManager("e123", "Bob", "abc123", computerScience);
+        ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack", "abc321", informationTechnology);
+        SchoolAdmin schoolAdmin = new SchoolAdmin("a123", "Sally", "sally");
+        CourseCoordinator courseCoordinator = new CourseCoordinator("c123", "Bob", "");
 
         programs.add(computerScience);
         programs.add(informationTechnology);
@@ -120,7 +114,7 @@ public class Console_New implements Serializable {
         handler.saveUsers(users);
         handler.savePrograms(programs);
         /*
-        * to be called when creating new project to populate data.*/
+         * to be called when creating new project to populate data.*/
 
     }
 
@@ -136,19 +130,28 @@ public class Console_New implements Serializable {
             System.out.println("0) Exit");
             System.out.println("Enter an option:");
             choice = Integer.parseInt(scanner.nextLine());
-            switch (choice){
+            switch (choice) {
                 case 1:
                     viewProgramMenu(pm);
                     break;
                 case 2:
                     System.out.println("\nCourses for " + pm.getProgram().getProgramName() + " are below;");
-                    for (AbstractCourse course : pm.getProgram().getCourses()){
+                    for (AbstractCourse course : pm.getProgram().getCourses()) {
                         System.out.println(course);
                     }
                     System.out.println();
                     int numOfSems = 1;
                     for (Semester sem : pm.getProgram().getAllSemesters()) {
                         System.out.println(numOfSems + ") " + "Semester " + sem.getSemNo() + " Year " + sem.getSemYear());
+                        System.out.println("Δ Subjects which are already in the semester");
+                        for(AbstractCourse c : sem.getSemesterSubjects()){
+                            if(c != null)
+                                System.out.println("» "+c.toString());
+                        }
+                        if(sem.getNumSubjects() ==  0){
+                            System.out.println("• None •");
+                        }
+                        System.out.println();
                         numOfSems++;
                     }
 
@@ -160,12 +163,10 @@ public class Console_New implements Serializable {
                         System.out.println("Enter Course ID of the Course to add into the Semester: ");
                         String courseID = scanner.nextLine();
                         //returns null if the course doesnt exist
-                        AbstractCourse course = courseExists(courseID,pm.getProgram());
-                        if(course != null){
+                        AbstractCourse course = courseExists(courseID, pm.getProgram());
+                        if (course != null) {
                             pm.addCourseOffering(course, pm.getProgram().getAllSemesters().get(choice - 1));
-                            System.out.println(course.getSubjectName()+" added successfully to " +  pm.getProgram().getAllSemesters().get(choice - 1).getSemIdentifier());
-
-                        }else{
+                        } else {
                             System.out.println("\nCourse Doesn't exist in the Program!");
                         }
                     } else {
@@ -178,71 +179,62 @@ public class Console_New implements Serializable {
                     run();
             }
 
-//            if (choice == 1) {
-//                if (pm.getProgram().getNumSubjects() != 0) {
-//                    pm.getProgram().printProgramSubjects();
-//                } else {
-//                    System.out.println("Proceed to option 2, no courses added");
-//                }
-//            } else {
-//                System.exit(0);
-//            }
         } while (choice != 0);
         run();
     }
 
-    private AbstractCourse courseExists(String courseId,Program pr){
-        AbstractCourse cr =null;
-        for(AbstractCourse c: pr.getCourses()){
-            if(courseId.equals(c.getSubjectId())){
+    private AbstractCourse courseExists(String courseId, Program pr) {
+        AbstractCourse cr = null;
+        for (AbstractCourse c : pr.getCourses()) {
+            if (courseId.equals(c.getSubjectId())) {
                 cr = c;
             }
         }
         return cr;
     }
 
-    private void viewProgramMenu(ProgramManager pm){
+    private void viewProgramMenu(ProgramManager pm) {
         System.out.println(pm.getProgram().toString());
 
         Program currProgram = pm.getProgram();
         System.out.println("------------------");
-        System.out.println("Courses in "+currProgram.getProgramName()+";");
-        for (Program curr : handler.readPrograms()){
+        System.out.println("Courses in " + currProgram.getProgramName() + ";");
+        for (Program curr : handler.readPrograms()) {
             if (curr.getProgramId().equals(currProgram.getProgramId())) {
-                for(AbstractCourse course: curr.getCourses()){
+                for (AbstractCourse course : curr.getCourses()) {
                     System.out.println(course.toString());
                 }
             }
         }
     }
 
-private void updateObjectState(User u){
-    //updates the state of the object to the one in the readFile
-    for(Program pr : programs){
-        if(u instanceof ProgramManager){
-            if(pr.getProgramId().equals(((ProgramManager)u).getProgram().getProgramId())){
-                ((ProgramManager)u).setProgram(pr);
-            }
-        }else if(u instanceof  Student){
-            if(pr.getProgramId().equals(((Student)u).getProgram().getProgramId())){
-                ((Student)u).setProgram(pr);
+    private void updateObjectState(User u) {
+        //updates the state of the object to the one in the readFile
+        for (Program pr : programs) {
+            if (u instanceof ProgramManager) {
+                if (pr.getProgramId().equals(((ProgramManager) u).getProgram().getProgramId())) {
+                    ((ProgramManager) u).setProgram(pr);
+                }
+            } else if (u instanceof Student) {
+                if (pr.getProgramId().equals(((Student) u).getProgram().getProgramId())) {
+                    ((Student) u).setProgram(pr);
+                }
             }
         }
     }
-}
 
     private void studentMenu(Student st) {
         do {
             System.out.println("1) Enrol Course\n" +
-                    "2) View Enrolled Courses\n" +"3) Show program map\n" + "4) Log Out\n" + "0) Exit\n" + "Please enter your choice:");
+                    "2) View Enrolled Courses\n" + "3) Show program map\n" + "4) Log Out\n" + "0) Exit\n" + "Please enter your choice:");
 
             choice = Integer.parseInt(scanner.nextLine());
 
             updateObjectState(st);
 
-            for(User u: users){
-                if(st.getUserId().equals(u.getUserId())){
-                    st = (Student)u;
+            for (User u : users) {
+                if (st.getUserId().equals(u.getUserId())) {
+                    st = (Student) u;
                 }
             }
 
@@ -250,7 +242,7 @@ private void updateObjectState(User u){
                 enrolStudent(st);
             } else if (choice == 2) {
                 st.printEnrolledSubjects();
-            } else if (choice ==3){
+            } else if (choice == 3) {
                 st.showStudentMap();
             } else if (choice == 4) {
                 break;
@@ -274,20 +266,20 @@ private void updateObjectState(User u){
             //If it is, proceed to delete all the prerequisites of the enrolled subject which the student is doing
             if (choice == 1) {
                 Student selectedStudent = getSelectStudent();
-                if(selectedStudent != null && selectedStudent.hasEnrolledSubjects()) {
+                if (selectedStudent != null && selectedStudent.hasEnrolledSubjects()) {
                     AbstractCourse selectedSubject = null;
                     selectedStudent.printEnrolledSubjects();
                     System.out.println("Enter a valid Subject ID: ");
                     String subjectID = scanner.nextLine();
                     //TODO: prepopulate with subjects of dummy data
                     selectedSubject = selectedStudent.findSelectedSubject(subjectID);
-                    if(selectedSubject != null) {
+                    if (selectedSubject != null) {
                         courseCoordinator.waivePrerequisite(selectedSubject);
                     } else {
                         System.out.println("Invalid Subject ID! Returning To Main Menu");
                         courseCoordinatorMenu(courseCoordinator);
                     }
-                } else if(!selectedStudent.hasEnrolledSubjects()) {
+                } else if (!selectedStudent.hasEnrolledSubjects()) {
                     System.out.println("Student Has Not Enrolled! Returning To Main Menu");
                     courseCoordinatorMenu(courseCoordinator);
                 } else {
@@ -307,8 +299,8 @@ private void updateObjectState(User u){
         Student selectedStudent = null;
         System.out.println("Enter a valid Student ID: ");
         String studentID = scanner.nextLine();
-        for(User user : users) {//TODO: check all student IDs in an arraylist of students in order to validate entered studentID
-            if(studentID.equals(user.getUserId())) {
+        for (User user : users) {//TODO: check all student IDs in an arraylist of students in order to validate entered studentID
+            if (studentID.equals(user.getUserId())) {
                 selectedStudent = (Student) user;
             }
         }
@@ -319,9 +311,9 @@ private void updateObjectState(User u){
     private void schoolAdminMenu(SchoolAdmin sa) {
 
         do {
-            System.out.println("1) Create Program\n" +"2) View Programs & Add Courses\n" + "3) Set Prerequisites For Subject\n" + "4) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
+            System.out.println("1) Create Program\n" + "2) View Programs & Add Courses\n" + "3) Set Prerequisites For Subject\n" + "4) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
             choice = Integer.parseInt(scanner.nextLine());
-            switch (choice){
+            switch (choice) {
                 case 1:
                     System.out.println("Enter the Program ID:");
                     this.programId = scanner.nextLine();
@@ -330,28 +322,27 @@ private void updateObjectState(User u){
                     System.out.println("Enter the length of the program:");
                     int lengthYears = Integer.parseInt(scanner.nextLine());
 
-                    sa.createCustomProgram(programId,programName,lengthYears);
-                    programs.add(new Program(programId,programName,lengthYears));
+                    sa.createCustomProgram(programId, programName, lengthYears);
+                    programs.add(new Program(programId, programName, lengthYears));
                     System.out.println(programName + " program successfully created!");
 
                     System.out.println("\nEnter number of courses to add: ");
                     int num = Integer.parseInt(scanner.nextLine());
 
                     handler.savePrograms(programs);
-                    addCourses(num,sa,programId);
-
+                    addCourses(num, sa, programId);
 
                     break;
                 case 2:
                     System.out.println();
-                    for (Program p : programs){
+                    for (Program p : programs) {
                         System.out.println(p.toString());
                         System.out.println("\n• Current Courses");
 
-                        if(p.getCourses().size() == 0 ) {
+                        if (p.getCourses().size() == 0) {
                             System.out.println("- No Courses added yet");
                         }
-                        for(AbstractCourse c: p.getCourses()){
+                        for (AbstractCourse c : p.getCourses()) {
                             System.out.println(c.toString());
                         }
                         System.out.println();
@@ -360,27 +351,27 @@ private void updateObjectState(User u){
                     System.out.println("Do you wish you to add Courses into any of the programs? (Y/N)");
                     String inp = scanner.nextLine().toUpperCase();
                     flag = inp.equals("Y");
-                    if(flag){
+                    if (flag) {
                         System.out.println("Adding Courses into the Program");
                         System.out.println("-------------------------------");
                         System.out.println("Enter Program ID:");
                         inp = scanner.nextLine();
                         boolean found = false;
-                        for(Program program : programs){
-                            if(inp.equals(program.getProgramId())){
+                        for (Program program : programs) {
+                            if (inp.equals(program.getProgramId())) {
                                 found = true;
                                 programId = program.getProgramId();
                                 programName = program.getProgramName();
                             }
                         }
-                        while(!found){
+                        while (!found) {
                             System.out.println("Program not found! Please enter again:");
                         }
 
-                            System.out.println("\nEnter number of courses to add: ");
-                            num = Integer.parseInt(scanner.nextLine());
+                        System.out.println("\nEnter number of courses to add: ");
+                        num = Integer.parseInt(scanner.nextLine());
 
-                            addCourses(num,sa,programId);
+                        addCourses(num, sa, programId);
 
                         //call the add course method
 
@@ -419,7 +410,7 @@ private void updateObjectState(User u){
                                 for (int i = 0; i < chosenProgram.getAllSemesters().indexOf(selectedSem); i++) {
                                     if (chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true) != null) {
                                         AbstractCourse prerequisite = chosenProgram.getAllSemesters().get(i).findSubject(prerequisiteID, true);
-                                       sa.setPrerequisites(selectedSub, prerequisite);
+                                        sa.setPrerequisites(selectedSub, prerequisite);
                                     }
                                 }
                             }
@@ -438,15 +429,15 @@ private void updateObjectState(User u){
     }
 
 
-    private void addCourses(int num,SchoolAdmin sa,String programId){
+    private void addCourses(int num, SchoolAdmin sa, String programId) {
         Program program = null;
-        for(Program program1 : programs){
-            if(program1.getProgramId().equals(programId)){
+        for (Program program1 : programs) {
+            if (program1.getProgramId().equals(programId)) {
                 program = program1;
             }
         }
 
-        if(program!=null) {
+        if (program != null) {
             int j = 1;
             while (j <= num) {
                 System.out.println("Enter Course Id: ");
@@ -459,18 +450,18 @@ private void updateObjectState(User u){
                 if (flag) {
 //                    sa.addCourses(program,courseId, courseName, true);
                     System.out.println(courseName + " successfully added into " + programName + " as a Core Course ! \n");
-                    program.addCourses(new Course(courseId,courseName,true));
+                    program.addCourses(new Course(courseId, courseName, true));
                 } else {
                     System.out.println(courseName + " successfully added into " + programName + " as an Elective! \n");
-                    program.addCourses(new Elective(courseId,courseName,false));
+                    program.addCourses(new Elective(courseId, courseName, false));
                 }
                 j++;
             }
 
             System.out.println(programName + " program and " + num + " courses are added successfully !");
             Program program2 = null;
-            for (Program program1 : programs){
-                if(program1.getProgramId().equals(programId)) {
+            for (Program program1 : programs) {
+                if (program1.getProgramId().equals(programId)) {
                     program2 = program1;
                 }
             }
@@ -480,7 +471,6 @@ private void updateObjectState(User u){
             handler.savePrograms(programs);
         }
     }
-
 
 
     private void enrolStudent(Student student) {
@@ -504,9 +494,9 @@ private void updateObjectState(User u){
 
                 student.enrolSubject(student.getProgram().getAllSemesters().get(choice - 1).getSemIdentifier(), student.getProgram().getAllSemesters().get(choice - 1).getSubject(courseChoice));
 
-                User u2 =null;
-                for (User u : users){
-                    if(u.getUserId().equals(student.getUserId())) {
+                User u2 = null;
+                for (User u : users) {
+                    if (u.getUserId().equals(student.getUserId())) {
                         u2 = u;
                     }
                 }

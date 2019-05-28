@@ -24,10 +24,10 @@ public class Student extends User implements Serializable {
         StringBuilder strElective = new StringBuilder();
 
         System.out.println("\nStudent's enrolled Program : "+ this.program.toString());
-        System.out.println("---------------------------");
+        System.out.println("------");
 
         for(int i =0;i<studentSem.size();i++){
-            System.out.println("Year "+studentSem.get(i).getSemYear() + " Semester " + studentSem.get(i).getSemNo());
+            System.out.println("Δ Year "+studentSem.get(i).getSemYear() + " Semester " + studentSem.get(i).getSemNo()+" Δ");
 
             //classifies the core courses and the electives
             for(AbstractCourse crNew: this.getProgram().getAllSemesters().get(i).getSemesterSubjects()){
@@ -40,17 +40,23 @@ public class Student extends User implements Serializable {
                 }
 
             }
-            //prints out the core Courses
-            System.out.println("\n• Core Courses;\n"+ strCore.toString());
+
+            if(strCore.toString().equals("") && strElective.toString().equals(""))
+                System.out.println("• No Courses added yet");
+
+            //prints out the Courses
+            if(!strCore.toString().equals("")) {
+                System.out.println("\n• Core Courses\n" + strCore.toString());
+            }
             if(!strElective.toString().equals("")){
-                System.out.println("\n• Electives;" + strElective.toString());
+                System.out.println("\n• Electives" + strElective.toString());
             }
 
-            //reset the stringbuilders
+            //reset the string builders
             strCore.setLength(0);
             strElective.setLength(0);
 
-            System.out.println("\n-----------------------\n");
+            System.out.println("\n•••••••••••\n");
         }
 
     }
