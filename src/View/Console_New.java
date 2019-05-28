@@ -106,9 +106,6 @@ public class Console_New implements Serializable {
         ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack", "abc321",informationTechnology);
         SchoolAdmin schoolAdmin = new SchoolAdmin("a123", "Sally","sally");
         CourseCoordinator courseCoordinator = new CourseCoordinator("c123", "Bob","");
-        Elective electiveOne = new Elective("COSC123","SADI",true);
-
-        //computerScience.addCourses(electiveOne);
 
         programs.add(computerScience);
         programs.add(informationTechnology);
@@ -135,7 +132,7 @@ public class Console_New implements Serializable {
 
             System.out.println("1) View Program");
             System.out.println("2) Add course offerings to Program");
-            System.out.println("3) Return to Main Menu");
+            System.out.println("3) Log Out");
             System.out.println("0) Exit");
             System.out.println("Enter an option:");
             choice = Integer.parseInt(scanner.nextLine());
@@ -166,6 +163,8 @@ public class Console_New implements Serializable {
                         AbstractCourse course = courseExists(courseID,pm.getProgram());
                         if(course != null){
                             pm.addCourseOffering(course, pm.getProgram().getAllSemesters().get(choice - 1));
+                            System.out.println(course.getSubjectName()+" added successfully to " +  pm.getProgram().getAllSemesters().get(choice - 1).getSemIdentifier());
+
                         }else{
                             System.out.println("\nCourse Doesn't exist in the Program!");
                         }
@@ -173,6 +172,10 @@ public class Console_New implements Serializable {
                         System.out.println("Invalid Option!");
                     }
                     break;
+
+                case 3:
+                    handler.savePrograms(programs);
+                    run();
             }
 
 //            if (choice == 1) {
@@ -231,7 +234,7 @@ private void updateObjectState(User u){
     private void studentMenu(Student st) {
         do {
             System.out.println("1) Enrol Course\n" +
-                    "2) View Enrolled Courses\n" +"3) Show program map\n" + "4) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
+                    "2) View Enrolled Courses\n" +"3) Show program map\n" + "4) Log Out\n" + "0) Exit\n" + "Please enter your choice:");
 
             choice = Integer.parseInt(scanner.nextLine());
 
@@ -340,11 +343,18 @@ private void updateObjectState(User u){
 
                     break;
                 case 2:
+                    System.out.println();
                     for (Program p : programs){
                         System.out.println(p.toString());
+                        System.out.println("\n• Current Courses");
+
+                        if(p.getCourses().size() == 0 ) {
+                            System.out.println("- No Courses added yet");
+                        }
                         for(AbstractCourse c: p.getCourses()){
                             System.out.println(c.toString());
                         }
+                        System.out.println();
                     }
 
                     System.out.println("Do you wish you to add Courses into any of the programs? (Y/N)");
