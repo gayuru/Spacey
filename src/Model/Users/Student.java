@@ -110,6 +110,13 @@ public class Student extends User implements Serializable {
         return selectedSubject;
     }
 
+    public void unGradedSubjects(){
+
+
+
+
+    }
+
     private boolean checkStudentEnrolledExisting(Semester sem, AbstractCourse subject) {
         for(AbstractCourse sub : sem.getSemesterSubjects()) {
             if(sub != null) {
