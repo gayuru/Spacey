@@ -137,13 +137,10 @@ public class Console_New implements Serializable {
             choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
-                    viewProgramMenu(pm);
+                    viewProgram(pm);
                     break;
                 case 2:
-                    System.out.println("\nCourses for " + pm.getProgram().getProgramName() + " are below;");
-                    for (AbstractCourse course : pm.getProgram().getCourses()) {
-                        System.out.println(course);
-                    }
+                    viewProgram(pm);
                     System.out.println();
                     int numOfSems = 1;
                     for (Semester sem : pm.getProgram().getAllSemesters()) {
@@ -198,7 +195,7 @@ public class Console_New implements Serializable {
         return cr;
     }
 
-    private void viewProgramMenu(ProgramManager pm) {
+    private void viewProgram(ProgramManager pm) {
         System.out.println(pm.getProgram().toString());
 
         StringBuilder coreCourses= new StringBuilder();
@@ -243,8 +240,7 @@ public class Console_New implements Serializable {
     private void studentMenu(Student st) {
         do {
             System.out.println("1) Enrol Course\n" +
-                    "2) View Enrolled Courses\n" + "3) Show program map\n"+ "4) Enter Grades\n" + "5) Log Out\n" + "0) Exit\n" + "Please enter your choice:");
-
+                    "2) View Enrolled Courses\n" + "3) Show program map\n"+ "4) Log Out\n" + "0) Exit\n" + "Please enter your choice:");
             choice = Integer.parseInt(scanner.nextLine());
             updateObjectState(st);
             for (User u : users) {
@@ -259,8 +255,6 @@ public class Console_New implements Serializable {
             } else if (choice == 3) {
                 st.showStudentMap();
             } else if (choice == 4) {
-                inputGrades(st);
-            } else if(choice == 5){
                 break;
             } else {
                 System.exit(0);
@@ -269,20 +263,6 @@ public class Console_New implements Serializable {
         run();
     }
 
-    private void inputGrades(Student st){
-        //assumption : enter grades only for the enrolled ones
-        System.out.println("Courses which are enrolled and haven't been graded yet; ");
-        st.printEnrolledSubjects();
-
-        System.out.println("Enter the Course Code to Grade it;");
-
-
-        System.out.println("Enter the Result (Pass/Fail);");
-
-
-        System.out.println("Subject Graded Successfully!");
-
-    }
 
     private void courseCoordinatorMenu(CourseCoordinator courseCoordinator) {
         do {
