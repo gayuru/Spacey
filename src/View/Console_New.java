@@ -500,14 +500,25 @@ public class Console_New implements Serializable {
                 System.out.println("No Classes Added Yet");
             } else {
                 System.out.println("\n\n" + "------ Add Classes  -------\n" + "Select the classes you wish to enrol in\n");
-                student.getProgram().getAllSemesters().get(choice - 1).printSemesterSubjects();
-                System.out.println("\nPlease enter your choice to add a Class:");
-                int courseChoice = Integer.parseInt(scanner.nextLine());
+                student.getProgram().getAllSemesters().get(choice - 1).printSemesterSubjectsPlain();
 
-                if(student.enrolSubject(student.getProgram().getAllSemesters().get(choice - 1).getSemIdentifier(), student.getProgram().getAllSemesters().get(choice - 1).getSubject(courseChoice))){
-                    System.out.println("\n• Enrollment Successful !\n");
+                int coreCourseCount= student.getProgram().getAllSemesters().get(choice - 1).getNumSubjects();
+                if(coreCourseCount != 4){
+                    System.out.println("\n• "+ (4-coreCourseCount) + " Elective/Electives can be chosen •");
+                    System.out.println();
+                    student.getProgram().printElectives();
+                }
+
+                System.out.println("\nPlease enter the Course Code to add a Class:");
+                String courseChoice = scanner.nextLine();
+
+                AbstractCourse curr = courseExists(courseChoice,student.getProgram());
+                if(curr !=null){
+                    if(!student.enrolSubject(student.getProgram().getAllSemesters().get(choice - 1).getSemIdentifier(),curr)){
+                        System.out.println("\n• Enrollment Failed ! Try Again\n");
+                    }
                 }else{
-                    System.out.println("\n• Enrollment Failed ! Try Again\n");
+                    System.out.println("\n• Course Doesn't exist !");
                 }
 
                 User u2 = null;
@@ -516,11 +527,9 @@ public class Console_New implements Serializable {
                         u2 = u;
                     }
                 }
-
                 users.remove(u2);
                 users.add(student);
                 handler.saveUsers(users);
-
             }
         } else {
             System.out.println("Invalid Option!");

@@ -53,15 +53,25 @@ public class Semester implements Serializable {
         return null;
     }
 
+    public void printSemesterSubjectsPlain() {
+        for(AbstractCourse subject : semesterSubjects) {
+            if(subject != null) {
+                System.out.println("» " + subject.toString());
+            }
+        }
+    }
     public void addSubjectSem(AbstractCourse subject) {
         if(numSubjectsAdded < MAX_NUM_COURSES_IN_SEM) {
             if(!checkSubjectExist(subject)) {
                 semesterSubjects.set(numSubjectsAdded,subject);
                 numSubjectsAdded++;
-                System.out.println(subject.getSubjectName()+" added successfully to " + this.getSemIdentifier());
+                System.out.println();
+                System.out.println(subject.getSubjectName()+" added successfully to Semester " + this.getSemNo() + " Year "+this.getSemYear() +"\n");
             }else{
                 System.out.println(subject.toString() + " already exists in the semester!\n");
             }
+        }else{
+            System.out.println("Error : Maximum Amount of Courses Reached in the Semester");
         }
     }
 

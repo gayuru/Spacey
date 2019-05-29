@@ -59,21 +59,9 @@ public class Student extends User implements Serializable {
             System.out.println("\n•••••••••••\n");
         }
 
-        printElectives();
+        this.program.printElectives();
 
     }
-
-    private void printElectives(){
-        System.out.println("Δ Electives for "+this.program.getProgramName() +" Δ");
-        for(AbstractCourse c: this.program.getCourses()){
-            if(!c.getBoolCoreCourse()){
-                System.out.println("» "+c.toString());
-            }
-        }
-        System.out.println();
-    }
-
-
 
     public boolean enrolSubject(String semIdentifier, AbstractCourse subject) {
         if(subject != null) {

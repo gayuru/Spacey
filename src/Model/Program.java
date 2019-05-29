@@ -71,6 +71,16 @@ public class Program implements Serializable {
         }
     }
 
+    public void printElectives(){
+        System.out.println("Δ Electives for "+programName +" Δ");
+        for(AbstractCourse c: this.getCourses()){
+            if(!c.getBoolCoreCourse()){
+                System.out.println("» "+c.toString());
+            }
+        }
+        System.out.println();
+    }
+
     public void printProgramPrerequisiteChoices(Semester prerequisiteSem) {
         System.out.println("Prerequisite Options: ");
         for(int i = 0; i < programSem.indexOf(prerequisiteSem); i++) {
