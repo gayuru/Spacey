@@ -95,27 +95,35 @@ public class Console_New implements Serializable {
     private void populate() {
         Program computerScience = new Program("BP0964", "Bachelor of Computer Science", 3);
         Program informationTechnology = new Program("BP162", "Bachelor of Information Technology", 3);
-        Student student = new Student("s123", "John Appleseed", "", computerScience);
-        ProgramManager computerSciencepm = new ProgramManager("e123", "Bob", "abc123", computerScience);
-        ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack", "abc321", informationTechnology);
-        SchoolAdmin schoolAdmin = new SchoolAdmin("a123", "Sally", "sally");
-        CourseCoordinator courseCoordinator = new CourseCoordinator("c123", "Bob", "");
+
+        Student studentOne = new Student("s001", "John Appleseed", "123", computerScience);
+        Student studentTwo = new Student("s002", "David Cook", "123", computerScience);
+        Student studentThree = new Student("s003", "Sean Stevenson", "123", computerScience);
+        Student studentFour = new Student("s004", "George Martin", "123", informationTechnology);
+        Student studentFive = new Student("s005", "Lewis Stephan", "123", informationTechnology);
+
+        ProgramManager computerSciencepm = new ProgramManager("e123", "Bob Francis", "123", computerScience);
+        ProgramManager informationTechnologypm = new ProgramManager("e321", "Jack Legend", "123", informationTechnology);
+        SchoolAdmin schoolAdmin = new SchoolAdmin("a123", "Sally Stevenson", "123");
+        CourseCoordinator courseCoordinator = new CourseCoordinator("c123", "Bob Frank", "123");
 
         programs.add(computerScience);
         programs.add(informationTechnology);
 
-        users.add(student);
+        users.add(studentOne); users.add(studentTwo); users.add(studentThree); users.add(studentFour); users.add(studentFive);
         users.add(computerSciencepm);
         users.add(informationTechnologypm);
         users.add(schoolAdmin);
         users.add(courseCoordinator);
 
+        schoolAdmin.populateCourses(computerScience);
+        schoolAdmin.populateCourses(informationTechnology);
         System.out.println("Populating the system");
         handler.saveUsers(users);
         handler.savePrograms(programs);
+
         /*
          * to be called when creating new project to populate data.*/
-
     }
 
     private void programManagerMenu(ProgramManager pm) {
@@ -196,16 +204,28 @@ public class Console_New implements Serializable {
     private void viewProgramMenu(ProgramManager pm) {
         System.out.println(pm.getProgram().toString());
 
+        StringBuilder coreCourses= new StringBuilder();
+        StringBuilder electives=  new StringBuilder();
         Program currProgram = pm.getProgram();
         System.out.println("------------------");
-        System.out.println("Courses in " + currProgram.getProgramName() + ";");
         for (Program curr : handler.readPrograms()) {
             if (curr.getProgramId().equals(currProgram.getProgramId())) {
                 for (AbstractCourse course : curr.getCourses()) {
-                    System.out.println(course.toString());
+                    if(course.getBoolCoreCourse()){
+                        coreCourses.append("» "+course.toString()+"\n");
+                    }else{
+                        electives.append("» "+course.toString()+"\n");
+                    }
                 }
             }
         }
+
+        System.out.println("\nΔ Core Courses Δ");
+        System.out.println(coreCourses.toString());
+
+        System.out.println("\nΔ Electives Δ");
+        System.out.println(electives.toString());
+
     }
 
     private void updateObjectState(User u) {
@@ -229,15 +249,12 @@ public class Console_New implements Serializable {
                     "2) View Enrolled Courses\n" + "3) Show program map\n" + "4) Log Out\n" + "0) Exit\n" + "Please enter your choice:");
 
             choice = Integer.parseInt(scanner.nextLine());
-
             updateObjectState(st);
-
             for (User u : users) {
                 if (st.getUserId().equals(u.getUserId())) {
                     st = (Student) u;
                 }
             }
-
             if (choice == 1) {
                 enrolStudent(st);
             } else if (choice == 2) {

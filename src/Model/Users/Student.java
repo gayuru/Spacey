@@ -48,7 +48,7 @@ public class Student extends User implements Serializable {
                 System.out.println("\n• Core Courses\n" + strCore.toString());
             }
             if(!strElective.toString().equals("")){
-                System.out.println("\n• Electives" + strElective.toString());
+                System.out.println("• Electives\n" + strElective.toString());
             }
 
             //reset the string builders
@@ -59,29 +59,6 @@ public class Student extends User implements Serializable {
         }
 
     }
-
-        //delete this after testing
-        public void testing(){
-            ProgramManager test = new ProgramManager("e949","Testing PM","123",this.program);
-
-            //this.program.addCourses(new Course("COSC192","User Centered Design",true));
-            program.getAllSemesters().get(0).addSubjectSem(new Course("COSC192","User Centered Design",true));
-            program.getAllSemesters().get(0).addSubjectSem(new Course("COSC132","Further Programming",false));
-
-            test.addCourseOffering(new Course("COSC192","User Centered Design",true),new Semester("s1y1"));
-            test.addCourseOffering(new Course("COSC132","Further Programming",true),new Semester("s1y1"));
-            test.addCourseOffering(new Course("COSC332","Intro to Systems",true),new Semester("s1y1"));
-            test.addCourseOffering(new Course("COSC254","Advanced Programming Techniques",true),new Semester("s1y1"));
-            test.addCourseOffering(new Course("COSC222","Algorithms Analysis",true),new Semester("s1y1"));
-
-            test.addCourseOffering(new Course("COSC192","User Centered Design",true),new Semester("s2y1"));
-            test.addCourseOffering(new Course("COSC132","Further Programming",true),new Semester("s2y1"));
-            test.addCourseOffering(new Course("COSC332","Intro to Systems",true),new Semester("s2y1"));
-            test.addCourseOffering(new Course("COSC254","Advanced Programming Techniques",true),new Semester("s2y1"));
-            test.addCourseOffering(new Course("COSC222","Algorithms Analysis",true),new Semester("s2y1"));
-
-        }
-
 
     public boolean enrolSubject(String semIdentifier, AbstractCourse subject) {
         if(subject != null) {

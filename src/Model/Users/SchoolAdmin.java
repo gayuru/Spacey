@@ -40,9 +40,6 @@ public class SchoolAdmin extends User implements Serializable {
 
     }
 
-
-
-
     public void printCustomProgram(){
         for(Program program  : programs){
             System.out.println(program.toString()+"\n"+program.getCourses().toString());
@@ -50,25 +47,45 @@ public class SchoolAdmin extends User implements Serializable {
     }
 
 
-    private void populateCourses(Program program){
-
+    public void populateCourses(Program program){
+        //common courses
         program.addCourses(new Course("COSC192","User Centered Design",true));
-        program.addCourses(new Course("COSC132","Further Programming",true));
-        program.addCourses(new Course("COSC332","Intro to Systems",true));
-        program.addCourses(new Course("COSC254","Advanced Programming Techniques",true));
-        program.addCourses(new Course("COSC222","Algorithms Analysis",true));
-        program.addCourses(new Course("COSC118","Software Engineering Fundamentals",true));
-        program.addCourses(new Course("COSC154","Web Programming",true));
-
-        program.addCourses(new Elective("COSC993","Security Systems",false));
-        program.addCourses(new Elective("COSC913","Web Systems",false));
-        program.addCourses(new Elective("COSC943","Games and Graphics",false));
-        program.addCourses(new Elective("COSC090","Mobile Computing",false));
-        program.addCourses(new Elective("COSC004","Data Science",false));
-        program.addCourses(new Elective("COSC121","iOS Programming",false));
-        program.addCourses(new Elective("COSC987","Games Design",false));
-        program.addCourses(new Elective("COSC570","Artificial Intelligence (AI)",false));
-
+        program.addCourses(new Course("COSC2473","Intro to Computer Systems",true));
+        program.addCourses(new Course("ISYS1057","Database Concepts",true));
+        program.addCourses(new Course("ISYS1118","Software Engineering Fundamentals",true));
+        program.addCourses(new Course("COSC1147","Professional Computing Practise",true));
+        program.addCourses(new Course("COSC2408","Programming Project 1",true));
+        program.addCourses(new Course("COSC2536","Security in Computing",true));
+        //common electives
+        program.addCourses(new Elective("COSC111","Data Communication and Net-Centric",false));
+        program.addCourses(new Elective("COSC2406","Web Systems",false));
+        program.addCourses(new Elective("COSC1187","Interactive 3D Graphics",false));
+        program.addCourses(new Elective("COSC2309","Mobile Computing",false));
+        program.addCourses(new Elective("COSC2738","Data Science",false));
+        program.addCourses(new Elective("COSC2471","iPhone Software Engineering",false));
+        program.addCourses(new Elective("COSC2673","Machine Learning",false));
+        program.addCourses(new Elective("COSC1179","Network Programming",false));
+        if(program.getProgramId().equals("BP0964")){
+            //all core courses in computerScience
+            program.addCourses(new Course("COSC1284","Programming Techniques",true));
+            program.addCourses(new Course("COSC2627","Discrete Structures in Computing",true));
+            program.addCourses(new Course("MATH2350","Intro to Data Analytics",true));
+            program.addCourses(new Course("COSC2391","Further Programming",true));
+            program.addCourses(new Course("COSC1076","Advanced Programming Techniques",true));
+            program.addCourses(new Course("COSC1107","Computing Theory",true));
+            program.addCourses(new Course("COSC2299","Software Engineering Process and Tools",true));
+            program.addCourses(new Course("COSC1114","Operating Systems",true));
+            program.addCourses(new Course("COSC1127","Artificial Intelligence",true));
+            program.addCourses(new Course("COSC2626","Cloud Computing",true));
+        }else{
+            //all core courses in IT
+            program.addCourses(new Course("COSC2625","Building IT Systems",true));
+            program.addCourses(new Course("COSC1078","Introduction to Information Technology",true));
+            program.addCourses(new Course("COSC1519","Introduction to Programming",true));
+            program.addCourses(new Course("COSC2413","Web Programming",true));
+            program.addCourses(new Course("ISYS1108","Software Engineering Project Management",true));
+            program.addCourses(new Course("COSC2409","Programming Project 2",true));
+        }
     }
 
   /*
