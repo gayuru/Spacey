@@ -12,7 +12,7 @@ public class Semester implements Serializable {
     private int numSubjectsAdded = 0;
 
     public Semester(String semIdentifier) {
-        this.semesterSubjects = Arrays.asList(new Course[MAX_NUM_COURSES_IN_SEM]);
+        this.semesterSubjects = Arrays.asList(new AbstractCourse[MAX_NUM_COURSES_IN_SEM]);
         this.semIdentifier = semIdentifier;
     }
 

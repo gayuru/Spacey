@@ -33,12 +33,11 @@ public class Student extends User implements Serializable {
             for(AbstractCourse crNew: this.getProgram().getAllSemesters().get(i).getSemesterSubjects()){
                 if(crNew !=null){
                     if(crNew.getBoolCoreCourse()){
-                        strCore.append("» "+crNew.toString());
+                        strCore.append("» "+crNew.toString()+"\n");
                     }else{
-                        strElective.append("» "+crNew.toString());
+                        strElective.append("» "+crNew.toString()+"\n");
                     }
                 }
-
             }
 
             if(strCore.toString().equals("") && strElective.toString().equals(""))
