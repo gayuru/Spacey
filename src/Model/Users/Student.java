@@ -21,12 +21,13 @@ public class Student extends User implements Serializable {
     public void showStudentMap(){
         //testing();
         StringBuilder strCore = new StringBuilder();
-        StringBuilder strElective = new StringBuilder();
 
         System.out.println("\nStudent's enrolled Program : "+ this.program.toString());
         System.out.println("------");
 
         for(int i =0;i<studentSem.size();i++){
+            int coreCourseCount=0;
+            int electiveCount;
             System.out.println("Δ Year "+studentSem.get(i).getSemYear() + " Semester " + studentSem.get(i).getSemNo()+" Δ");
 
             //classifies the core courses and the electives
@@ -34,39 +35,81 @@ public class Student extends User implements Serializable {
                 if(crNew !=null){
                     if(crNew.getBoolCoreCourse()){
                         strCore.append("» "+crNew.toString()+"\n");
-                    }else{
-                        strElective.append("» "+crNew.toString()+"\n");
+                        coreCourseCount++;
                     }
                 }
             }
 
-            if(strCore.toString().equals("") && strElective.toString().equals(""))
+            if(strCore.toString().equals(""))
                 System.out.println("• No Courses added yet");
 
             //prints out the Courses
             if(!strCore.toString().equals("")) {
                 System.out.println("\n• Core Courses\n" + strCore.toString());
             }
-            if(!strElective.toString().equals("")){
-                System.out.println("• Electives\n" + strElective.toString());
+
+            if(coreCourseCount != 4){
+                electiveCount = 4 - coreCourseCount;
+                System.out.println("• "+electiveCount + " Elective/Electives can be chosen •");
             }
 
             //reset the string builders
             strCore.setLength(0);
-            strElective.setLength(0);
 
             System.out.println("\n•••••••••••\n");
         }
 
+        printElectives();
+
     }
+
+    private void printElectives(){
+        System.out.println("Δ Electives for "+this.program.getProgramName() +" Δ");
+        for(AbstractCourse c: this.program.getCourses()){
+            if(!c.getBoolCoreCourse()){
+                System.out.println("» "+c.toString());
+            }
+        }
+        System.out.println();
+    }
+
+
 
     public boolean enrolSubject(String semIdentifier, AbstractCourse subject) {
         if(subject != null) {
             for(Semester sem : studentSem) {
                 if(sem.getSemIdentifier().equals(semIdentifier)) {
                     if(!checkStudentEnrolledExisting(sem, subject)) {
-                        sem.addSubjectSem(subject);
-                        return true;
+                        if(checkPrerequisite(subject)){
+                            sem.addSubjectSem(subject);
+                            return true;
+                        }else{
+                            System.out.println("\n• Student Haven't completed one of "+subject.getSubjectName()+"'s Prerequisite;");
+                            System.out.println(subject.getCoursePrerequisites().toString()+"\n");
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean checkPrerequisite(AbstractCourse subject){
+        if(subject.getCoursePrerequisites().isEmpty()){
+            return true;
+        }
+        for(AbstractCourse c : subject.getCoursePrerequisites()){
+            if(checkSubjectEnrolled(c)) return true;
+        }
+        return false;
+    }
+
+    private boolean checkSubjectEnrolled(AbstractCourse subject){
+        for(Semester s : studentSem){
+            for(AbstractCourse c: s.getSemesterSubjects()){
+                if(c != null){
+                    if(c.getSubjectId().equals(subject.getSubjectId())){
+                    return true;
                     }
                 }
             }
@@ -109,6 +152,7 @@ public class Student extends User implements Serializable {
         }
         return selectedSubject;
     }
+
 
     private boolean checkStudentEnrolledExisting(Semester sem, AbstractCourse subject) {
         for(AbstractCourse sub : sem.getSemesterSubjects()) {

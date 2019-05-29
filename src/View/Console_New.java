@@ -47,8 +47,8 @@ public class Console_New implements Serializable {
                 System.out.println("\nΔ Username / Password Invalid!\nΔ Please Log in again!");
                 run();
             }
-            System.out.println("Welcome " + pm.getUserName());
-            System.out.println("Program Manager For " + pm.getProgram().getProgramId() + " " + pm.getProgram().getProgramName() + "\n");
+            System.out.println("\nΔ Welcome " + pm.getUserName() + " Δ");
+            System.out.println("• Program Manager For " + pm.getProgram().getProgramId() + " " + pm.getProgram().getProgramName() + "\n");
             programManagerMenu(pm);
         } else if (userType.startsWith("s")) {
             Student st = (Student) returnUser(userType, password);
@@ -56,8 +56,8 @@ public class Console_New implements Serializable {
                 System.out.println("\nΔ Username / Password Invalid!\nΔ Please Log in again!");
                 run();
             }
-            System.out.println("Welcome " + st.getUserName());
-            System.out.println("Student Of " + st.getProgram().getProgramId() + " " + st.getProgram().getProgramName() + "\n");
+            System.out.println("\nΔ Welcome " + st.getUserName()+ " Δ");
+            System.out.println("• Student Of " + st.getProgram().getProgramId() + " " + st.getProgram().getProgramName() + "\n");
             studentMenu(st);
         } else if (userType.startsWith("a")) {
             SchoolAdmin sa = (SchoolAdmin) returnUser(userType, password);
@@ -65,7 +65,7 @@ public class Console_New implements Serializable {
                 System.out.println("\nΔ Username / Password Invalid!\nΔ Please Log in again!");
                 run();
             }
-            System.out.println("Welcome School Admin " + sa.getUserName());
+            System.out.println("\nΔ Welcome School Admin " + sa.getUserName() + " Δ\n");
             schoolAdminMenu(sa);
         } else if (userType.startsWith("c")) {
             CourseCoordinator cc = (CourseCoordinator) returnUser(userType, password);
@@ -73,7 +73,7 @@ public class Console_New implements Serializable {
                 System.out.println("\nΔ Username / Password Invalid!\nΔ Please Log in again!");
                 run();
             }
-            System.out.println("Welcome Course Coordinator " + cc.getUserName());
+            System.out.println("\nΔ Welcome Course Coordinator " + cc.getUserName()+ " Δ");
             courseCoordinatorMenu(cc);
         } else {
             System.out.println("\nΔ Username / Password Invalid!\nΔ Please Log in again!");
@@ -322,7 +322,7 @@ public class Console_New implements Serializable {
     private void schoolAdminMenu(SchoolAdmin sa) {
 
         do {
-            System.out.println("1) Create Program\n" + "2) View Programs & Add Courses\n" + "3) Set Prerequisites For Subject\n" + "4) Return to Main Menu\n" + "0) Exit\n" + "Please enter your choice:");
+            System.out.println("1) Create Program\n" + "2) View Programs & Add Courses\n" + "3) Set Prerequisites For Subject\n" + "4) Log Out\n" + "0) Exit\n" + "Please enter your choice:");
             choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
@@ -433,6 +433,7 @@ public class Console_New implements Serializable {
                     }
                     break;
                 case 4:
+                    handler.savePrograms(programs);
                     run();
                     break;
             }
@@ -503,7 +504,11 @@ public class Console_New implements Serializable {
                 System.out.println("\nPlease enter your choice to add a Class:");
                 int courseChoice = Integer.parseInt(scanner.nextLine());
 
-                student.enrolSubject(student.getProgram().getAllSemesters().get(choice - 1).getSemIdentifier(), student.getProgram().getAllSemesters().get(choice - 1).getSubject(courseChoice));
+                if(student.enrolSubject(student.getProgram().getAllSemesters().get(choice - 1).getSemIdentifier(), student.getProgram().getAllSemesters().get(choice - 1).getSubject(courseChoice))){
+                    System.out.println("\n• Enrollment Successful !\n");
+                }else{
+                    System.out.println("\n• Enrollment Failed ! Try Again\n");
+                }
 
                 User u2 = null;
                 for (User u : users) {
