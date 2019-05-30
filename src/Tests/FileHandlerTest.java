@@ -33,15 +33,16 @@ public class FileHandlerTest {
      courseCoordinator = new CourseCoordinator("c123", "Bob","");
      readFile();
      writeToFile();
-
     }
 
+    //reads the file
     private static void readFile(){
         handler = new FileHandler();
         users = handler.readUsers();
         programs = handler.readPrograms();
     }
 
+    //writes to the file
     private static void writeToFile(){
         programs.add(computerScience);
         programs.add(informationTechnology);
@@ -55,6 +56,7 @@ public class FileHandlerTest {
         handler.savePrograms(programs);
     }
 
+    //Test Case : Checks if the system reads the Programs correctly
     @Test
     public void readProgram() {
         //expected result
@@ -69,6 +71,7 @@ public class FileHandlerTest {
         assertEquals(expectedResult,tempProgramId);
     }
 
+    //Test Case : Checks if the system reads the Program Managers Correctly
     @Test
     public void readProgramManager() {
         //expected result
@@ -83,6 +86,7 @@ public class FileHandlerTest {
         assertEquals(expectedResult,tempPMid);
     }
 
+    //Test Case : Checks if the system reads the Course Coordinators Correctly
     @Test
     public void readCourseCoordinator() {
         //expected result
@@ -97,6 +101,7 @@ public class FileHandlerTest {
         assertEquals(expectedResult,tempCCid);
     }
 
+    //Test Case : Checks if the system reads the School Admins Correctly
     @Test
     public void readSchoolAdmin() {
         //expected result
@@ -111,6 +116,7 @@ public class FileHandlerTest {
         assertEquals(expectedResult,tempSA);
     }
 
+    //Test Case : Checks if the system reads the Students Correctly
     @Test
     public void readStudent() {
         //expected result

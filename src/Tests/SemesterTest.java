@@ -33,9 +33,9 @@ public class SemesterTest {
     public void init(){
         //resets semester object before each test
         semester = new Semester("s1y1");
-
     }
 
+    //Test Case : Checks if the system gets the semester year correctly
     @Test
     public void getSemYear() {
         //expected result
@@ -45,6 +45,7 @@ public class SemesterTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    //Test Case : Checks if the system gets the semester no correctly
     @Test
     public void getSemNo() {
         //expected result
@@ -54,6 +55,7 @@ public class SemesterTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    //Test Case : Checks if the system gets the semester identifier correctly
     @Test
     public void getSemIdentifier() {
         //expected result
@@ -63,6 +65,7 @@ public class SemesterTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    //Test Case : Checks if the system gets the subjects in the semester correctly
     @Test
     public void getNumSubjects() {
         //actions
@@ -74,6 +77,7 @@ public class SemesterTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    //Test Case : Checks if the system gets the subjects in the semester correctly
     @Test
     public void getNumSubjects2() {
         //actions
@@ -86,6 +90,7 @@ public class SemesterTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    //Test Case : Checks if the system returns the subject correctly
     @Test
     public void getSubject() {
         //actions
@@ -97,6 +102,7 @@ public class SemesterTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    //Test Case : Checks if the system adds a subject into the semester correctly
     @Test
     public void addSubjectSem() {
         //actions

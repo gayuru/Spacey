@@ -25,6 +25,7 @@ public class StudentTest {
         pm = new ProgramManager("E123","Tim Cook","",informationTechnology);
     }
 
+    //Test Case : Checks if the system gets the user id correctly
     @Test
     public void testGetUserId() {
         //expected result
@@ -34,6 +35,7 @@ public class StudentTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    //Test Case : Checks if the system gets the username correctly
     @Test
     public void testGetUserName() {
         //expected result
@@ -43,6 +45,7 @@ public class StudentTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    //Test Case : Checks if the system gets the program of the student correctly
     @Test
     public void testGetProgram() {
         //expected result
@@ -52,6 +55,7 @@ public class StudentTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    //Test Case : Checks if a student can enrol into the same course twice
     @Test
     public void enrolDuplicateCourse(){
         pm.addCourseOffering(new Course("COC123","SADI",true),semOne);

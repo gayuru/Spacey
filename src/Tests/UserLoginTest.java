@@ -46,23 +46,27 @@ public class UserLoginTest {
         return false;
     }
 
+    //Test Case : Checks if a student can log in successfully
     @Test
     public void testStudentLogin(){
         boolean actual = logInUser(user1.getUserName(),user1.getPassword());
         assertTrue(actual);
     }
 
+    //Test Case : Checks if the program manager can log in successfully
     @Test
     public void testPmLogin(){
         boolean actual = logInUser(user2.getUserName(),user2.getPassword());
         assertTrue(actual);
     }
 
+    //Test Case : Checks if a Course Coordinator  can log in successfully
     @Test
     public void testCCLogin(){
         boolean actual = logInUser(user3.getUserName(),user3.getPassword());
         assertTrue(actual);
     }
+    //Test Case : Checks if the School Admin can log in successfully
     @Test
     public void testSaLogin(){
         boolean actual = logInUser(user4.getUserName(),user4.getPassword());

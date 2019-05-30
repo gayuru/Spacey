@@ -29,7 +29,7 @@ public class ProgramManagerTest {
         courses = computerScience.getCourses();
     }
 
-
+    //Test Case : Checks if the system adds Course Offerings to the Program Correctly
     @Test
     public void addCourseOffering() {
         for (AbstractCourse course : courses){
@@ -49,23 +49,25 @@ public class ProgramManagerTest {
         }
     }
 
+    //Test Case : Checks if the system reads the users ID correctly
     @Test
     public void getUserId() {
         //expected result
-        String expectedResult = "e123456";
+        String expectedResult = "e123";
         // actual result
         String actualResult = computerSciencepm.getUserId();
         assertEquals(expectedResult, actualResult);
     }
-
+    //Test Case : Checks if the system gets the users, username correctly
     @Test
     public void getUserName() {
         //expected result
-        String expectedResult = "John Doe";
+        String expectedResult = "Bob";
         // actual result
         String actualResult = computerSciencepm.getUserName();
         assertEquals(expectedResult, actualResult);
     }
+    //Test Case : Checks if the system gets the program object correctly
     @Test
     public void getProgram() {
         //expected result

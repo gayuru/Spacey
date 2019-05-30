@@ -21,8 +21,6 @@ public class ProgramTest {
     private static Semester semester;
     private static ProgramManager johnDoe;
 
-
-
     @BeforeClass
     public static void setUp() {
         computerScience = new Program("BP160", "Bachelor of Computer Science", 3);
@@ -33,7 +31,7 @@ public class ProgramTest {
         semester = johnDoe.getProgram().getAllSemesters().get(0);
     }
 
-
+    //Test Case : Checks if the system gets the Program correctly
     @Test
     public void getProgramId() {
         //expected result
@@ -43,6 +41,7 @@ public class ProgramTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    //Test Case : Checks if the system reads program name correctly
     @Test
     public void getProgramName() {
         //expected result
@@ -52,10 +51,9 @@ public class ProgramTest {
         assertEquals(expectedResult, actualResult);
     }
 
-
+    //checks if the system gets the num of subjects correctly
     @Test
     public void getNumberOfSubjects() {
-
         johnDoe.addCourseOffering(courseOne, semester);
         //expected result
         int expectedResult = 1;
