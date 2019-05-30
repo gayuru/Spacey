@@ -18,10 +18,9 @@ public class Student extends User implements Serializable {
         program.generateSemesters(studentSem);
     }
 
+    //prints out the studentMap
     public void showStudentMap(){
-        //testing();
         StringBuilder strCore = new StringBuilder();
-
         System.out.println("\nStudent's enrolled Program : "+ this.program.toString());
         System.out.println("------");
 
@@ -29,7 +28,6 @@ public class Student extends User implements Serializable {
             int coreCourseCount=0;
             int electiveCount;
             System.out.println("Δ Year "+studentSem.get(i).getSemYear() + " Semester " + studentSem.get(i).getSemNo()+" Δ");
-
             //classifies the core courses and the electives
             for(AbstractCourse crNew: this.getProgram().getAllSemesters().get(i).getSemesterSubjects()){
                 if(crNew !=null){
@@ -39,35 +37,32 @@ public class Student extends User implements Serializable {
                     }
                 }
             }
-
             if(strCore.toString().equals(""))
                 System.out.println("• No Courses added yet");
-
             //prints out the Courses
             if(!strCore.toString().equals("")) {
                 System.out.println("\n• Core Courses\n" + strCore.toString());
             }
-
+            //checks if the semester can have electives
             if(coreCourseCount != 4){
                 electiveCount = 4 - coreCourseCount;
                 System.out.println("• "+electiveCount + " Elective/Electives can be chosen •");
             }
-
             //reset the string builders
             strCore.setLength(0);
-
             System.out.println("\n•••••••••••\n");
         }
-
         this.program.printElectives();
-
     }
 
+    //student enrols in a subject
     public boolean enrolSubject(String semIdentifier, AbstractCourse subject) {
         if(subject != null) {
             for(Semester sem : studentSem) {
                 if(sem.getSemIdentifier().equals(semIdentifier)) {
+                    //checks if the student has been already enrolled in the subject
                     if(!checkStudentEnrolledExisting(sem, subject)) {
+                        //checks if it has a pre requisite
                         if(checkPrerequisite(subject)){
                             sem.addSubjectSem(subject);
                             return true;
@@ -82,6 +77,7 @@ public class Student extends User implements Serializable {
         return false;
     }
 
+    //checks for the prerequisites in the subject
     private boolean checkPrerequisite(AbstractCourse subject){
         if(subject.getCoursePrerequisites().isEmpty()){
             return true;
@@ -92,6 +88,7 @@ public class Student extends User implements Serializable {
         return false;
     }
 
+    //checks for the enrolled subjects by a student
     private boolean checkSubjectEnrolled(AbstractCourse subject){
         for(Semester s : studentSem){
             for(AbstractCourse c: s.getSemesterSubjects()){
@@ -105,6 +102,7 @@ public class Student extends User implements Serializable {
         return false;
     }
 
+    //checks if the student has enrolled in any subjects
     public boolean hasEnrolledSubjects() {
         boolean isStudentEnrolled = false;
         for(Semester sem : studentSem) {
@@ -119,6 +117,7 @@ public class Student extends User implements Serializable {
         this.program = program;
     }
 
+    //prints all the enrolled subjects of a student
     public void printEnrolledSubjects() {
         System.out.println("Student: " + super.getUserId() + " " + super.getUserName() + " " + program.getProgramName());
         for(Semester sem: studentSem){
@@ -127,6 +126,7 @@ public class Student extends User implements Serializable {
         }
     }
 
+    //returns the course in a semester
     public AbstractCourse findSelectedSubject(String selectedSubID) {
         AbstractCourse selectedSubject = null;
         for(Semester sem: studentSem) {
@@ -141,7 +141,7 @@ public class Student extends User implements Serializable {
         return selectedSubject;
     }
 
-
+    //checks if the student has already enrolled in a subject
     private boolean checkStudentEnrolledExisting(Semester sem, AbstractCourse subject) {
         for(AbstractCourse sub : sem.getSemesterSubjects()) {
             if(sub != null) {
@@ -171,7 +171,4 @@ public class Student extends User implements Serializable {
     public String toString() {
         return String.format("Student ID: %s\nStudent Name: %s\nCurrent Program: %s \n",getUserId(),getUserName(),getProgram().toString());
     }
-
-
-
 }

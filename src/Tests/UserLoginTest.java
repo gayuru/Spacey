@@ -1,6 +1,7 @@
-package Model.Users;
+package Tests;
 
 import Model.Program;
+import Model.Users.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

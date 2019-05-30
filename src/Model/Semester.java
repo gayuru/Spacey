@@ -16,24 +16,7 @@ public class Semester implements Serializable {
         this.semIdentifier = semIdentifier;
     }
 
-    public String getSemYear() {
-        return String.valueOf(semIdentifier.charAt(3));
-    }
-
-    public String getSemNo() {
-        return String.valueOf(semIdentifier.charAt(1));
-    }
-
-    public String getSemIdentifier() { return semIdentifier;}
-
-    public List<AbstractCourse> getSemesterSubjects() {
-        return semesterSubjects;
-    }
-
-    public int getNumSubjects() {
-        return numSubjectsAdded;
-    }
-
+    //prints out the subjects in the semester
     public void printSemesterSubjects() {
         int num = 1;
         for(AbstractCourse subject : semesterSubjects) {
@@ -46,6 +29,7 @@ public class Semester implements Serializable {
         }
     }
 
+    //returns the course in the specific index of the semester
     public AbstractCourse getSubject(int subjectIndex) {
         if(subjectIndex-1 < numSubjectsAdded && subjectIndex-1 >= 0) {
             return semesterSubjects.get(subjectIndex-1);
@@ -53,6 +37,7 @@ public class Semester implements Serializable {
         return null;
     }
 
+    //prints out the subjects in the semester without numbering
     public void printSemesterSubjectsPlain() {
         for(AbstractCourse subject : semesterSubjects) {
             if(subject != null) {
@@ -60,8 +45,12 @@ public class Semester implements Serializable {
             }
         }
     }
+
+    //adds a subject into the semester
     public void addSubjectSem(AbstractCourse subject) {
+        //checks if there already 4 subjects in the semester
         if(numSubjectsAdded < MAX_NUM_COURSES_IN_SEM) {
+            //checks if the subject already exists
             if(!checkSubjectExist(subject)) {
                 semesterSubjects.set(numSubjectsAdded,subject);
                 numSubjectsAdded++;
@@ -75,6 +64,7 @@ public class Semester implements Serializable {
         }
     }
 
+    //checking if subject exists in the semester
     private boolean checkSubjectExist(AbstractCourse subject) {
         for(AbstractCourse sub : semesterSubjects) {
             if(sub != null) {
@@ -86,6 +76,7 @@ public class Semester implements Serializable {
         return false;
     }
 
+    //returns the subject from the semester
     public AbstractCourse findSubject(String subjectID, boolean isFindingPrerequisite) {
         for(AbstractCourse sub : semesterSubjects) {
             if(sub != null) {
@@ -102,4 +93,17 @@ public class Semester implements Serializable {
         return null;
     }
 
+    public String getSemYear() {
+        return String.valueOf(semIdentifier.charAt(3));
+    }
+    public String getSemNo() {
+        return String.valueOf(semIdentifier.charAt(1));
+    }
+    public String getSemIdentifier() { return semIdentifier;}
+    public List<AbstractCourse> getSemesterSubjects() {
+        return semesterSubjects;
+    }
+    public int getNumSubjects() {
+        return numSubjectsAdded;
+    }
 }

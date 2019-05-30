@@ -19,25 +19,12 @@ public class Program implements Serializable {
         generateSemesters(programSem);
     }
 
-    public String getProgramId() {
-        return programId;
-    }
-
-    public String getProgramName() {
-        return programName;
-    }
-
-    public List<Semester> getAllSemesters(){
-        return this.programSem;
-    }
-
+    //adding courses to a program
     public void addCourses(AbstractCourse course){
-
         courses.add(course);
-
     }
 
-
+    //returns the num of subjects in a program
     public int getNumSubjects() {
         int count = 0;
         for(Semester sem: programSem){
@@ -46,6 +33,7 @@ public class Program implements Serializable {
         return count;
     }
 
+    //generating of the semesters according to the program length
     public void generateSemesters(List <Semester> semList) {
         int numSems = programLengthYears * Semester.MAX_NUM_SEM_IN_YEAR;
         int count = 1;
@@ -63,6 +51,7 @@ public class Program implements Serializable {
         }
     }
 
+    //prints out the program along with the courses in each semester
     public void printProgramSubjects(){
         System.out.println("Program: " + programId + " " + programName);
         for(Semester sem: programSem){
@@ -71,6 +60,7 @@ public class Program implements Serializable {
         }
     }
 
+    //prints the electives in a program
     public void printElectives(){
         System.out.println("Δ Electives for "+programName +" Δ");
         for(AbstractCourse c: this.getCourses()){
@@ -81,6 +71,7 @@ public class Program implements Serializable {
         System.out.println();
     }
 
+    //prints out the options available for the pre requisites
     public void printProgramPrerequisiteChoices(Semester prerequisiteSem) {
         System.out.println("Prerequisite Options: ");
         for(int i = 0; i < programSem.indexOf(prerequisiteSem); i++) {
@@ -92,10 +83,18 @@ public class Program implements Serializable {
     public List<AbstractCourse> getCourses(){
         return this.courses;
     }
+    public String getProgramId() {
+        return programId;
+    }
+    public String getProgramName() {
+        return programName;
+    }
+    public List<Semester> getAllSemesters(){
+        return this.programSem;
+    }
 
     @Override
     public String toString() {
         return String.format(getProgramId() + " : "+ getProgramName());
     }
-
 }

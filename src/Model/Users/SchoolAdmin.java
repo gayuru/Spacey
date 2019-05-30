@@ -13,40 +13,18 @@ public class SchoolAdmin extends User implements Serializable {
     private List<Program> programs;
     private Program program;
 
-
     public SchoolAdmin(String userId, String userName,String password){
         super(userId,userName,password);
         this.programs = new ArrayList<>();
     }
 
+    //creates a program
     public void createCustomProgram(String programId,String programName,int years){
-
         program = new Program(programId,programName,years);
         programs.add(program);
     }
 
-    public List<Program> getPrograms(){
-        return this.programs;
-    }
-
-
-    public void addCourses(Program program, String courseId,String courseName,boolean y){
-        this.program = program;
-        if(y){
-            program.addCourses(new Course(courseId,courseName,true));
-        }else {
-            program.addCourses(new Elective(courseId,courseName,false));
-        }
-
-    }
-
-    public void printCustomProgram(){
-        for(Program program  : programs){
-            System.out.println(program.toString()+"\n"+program.getCourses().toString());
-        }
-    }
-
-
+    //populating of the system
     public void populateCourses(Program program){
         //common courses
         program.addCourses(new Course("COSC192","User Centered Design",true));
@@ -88,52 +66,7 @@ public class SchoolAdmin extends User implements Serializable {
         }
     }
 
-  /*
-
-    Program[] p = new Program[];
-      void createProgram (String programName){
-        switch(pm){
-            case "CS":
-                void createCSProgram();
-                .
-                .
-                .
-                .
-                .
-         }
-
-
-         void createCsProgram(){
-
-            p.get(0).add(cs)
-
-            array of courses inside the program
-
-            when we add the course we tell its core  or elective
-            cs.addCourses()
-
-         }
-
-         createNewProrgram(){
-
-
-
-         }
-
-
-
-
-   */
-
-
-//    public void setCoreCourse(Course course) {
-//        course.setBoolCoreCourse(true);
-//    }
-//
-//    public void setSchoolElective(Elective elective) {
-//        elective.setBoolCoreCourse(false);
-//    }
-
+    //allocating the prerequisites for subjects
     public void setPrerequisites(AbstractCourse selectedSub, AbstractCourse prerequisite) {
         selectedSub.getCoursePrerequisites().add(prerequisite);
         selectedSub.printCoursePrerequisites();

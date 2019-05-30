@@ -1,5 +1,6 @@
-package Model.Users;
+package Tests;
 import Model.*;
+import Model.Users.ProgramManager;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

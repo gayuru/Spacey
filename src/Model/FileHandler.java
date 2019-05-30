@@ -9,6 +9,7 @@ import java.util.*;
 
 public class FileHandler implements Serializable {
 
+    //file writing for users
     public void saveUsers(List<User> users) {
         try
         {
@@ -20,37 +21,34 @@ public class FileHandler implements Serializable {
         }
     }
 
+    //file reading for users
     public List<User> readUsers()  {
         List<User> users = new ArrayList<>();
-
        try {
            FileInputStream fis = new FileInputStream("users.dat");
            ObjectInputStream ois = new ObjectInputStream(fis);
            users = (List<User>)ois.readObject();
            ois.close();
-       }
-       catch (Exception ex){
+       }catch (Exception ex){
            System.out.println(ex.getMessage());
        }
         return users;
-
     }
 
+    //file writing for programs
     public void savePrograms(List<Program> programs) {
-        try
-        {
+        try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("programs.dat",false));
             oos.writeObject(programs);
             oos.close();
         }catch(IOException ioe) {
             ioe.printStackTrace();
         }
-
     }
 
+    //file reading for programs
     public List<Program> readPrograms() {
         List<Program> programs = new ArrayList<>();
-
         try {
             ObjectInputStream  in = new ObjectInputStream(new FileInputStream("programs.dat"));
             programs = (List<Program>) in.readObject();
@@ -59,6 +57,5 @@ public class FileHandler implements Serializable {
             System.out.println(e.getMessage());
         }
         return programs;
-
     }
 }

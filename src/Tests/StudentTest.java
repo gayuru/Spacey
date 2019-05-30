@@ -1,8 +1,10 @@
-package Model.Users;
+package Tests;
 
 import Model.Course;
 import Model.Program;
 import Model.Semester;
+import Model.Users.ProgramManager;
+import Model.Users.Student;
 import org.junit.BeforeClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,10 +21,8 @@ public class StudentTest {
     public static void setUp() {
         informationTechnology = new Program("BP162", "Bachelor of IT",3);
         student = new Student("s3255654", "John Test","", informationTechnology);
-semOne = new Semester("s1y1");
-
+        semOne = new Semester("s1y1");
         pm = new ProgramManager("E123","Tim Cook","",informationTechnology);
-
     }
 
     @Test
@@ -45,7 +45,6 @@ semOne = new Semester("s1y1");
 
     @Test
     public void testGetProgram() {
-
         //expected result
         Program expectedResult = informationTechnology;
         // actual result
@@ -55,13 +54,11 @@ semOne = new Semester("s1y1");
 
     @Test
     public void enrolDuplicateCourse(){
-
         pm.addCourseOffering(new Course("COC123","SADI",true),semOne);
         pm.addCourseOffering(new Course("COC12333","UCD",true),semOne);
 
         assertTrue(student.enrolSubject(semOne.getSemIdentifier(), semOne.getSubject(1)));
         assertFalse(student.enrolSubject(semOne.getSemIdentifier(), semOne.getSubject(1)));
-
 
     }
 }

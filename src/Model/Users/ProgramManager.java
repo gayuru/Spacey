@@ -12,14 +12,14 @@ public class ProgramManager extends User implements Serializable {
         this.program = program;
     }
 
-    public void setProgram(Program program) {
-        this.program = program;
-    }
-
+    //adds a course into a semester
     public void addCourseOffering(AbstractCourse course, Semester sem){
         sem.addSubjectSem(course);
     }
 
+    public void setProgram(Program program) {
+        this.program = program;
+    }
     @Override
     public String getUserId() {
         return super.getUserId();

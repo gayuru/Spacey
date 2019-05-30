@@ -1,5 +1,9 @@
-package Model;
+package Tests;
 
+import Model.AbstractCourse;
+import Model.Course;
+import Model.Program;
+import Model.Semester;
 import Model.Users.ProgramManager;
 import org.junit.Before;
 import org.junit.BeforeClass;
