@@ -1,4 +1,4 @@
-# Spacey
+# Spacey [![CodeFactor](https://www.codefactor.io/repository/github/gayuru/spacey_new/badge)](https://www.codefactor.io/repository/github/gayuru/spacey_new)
 A Student Enrolment  system which enables students to enrol into their subjects prior to the commencement of their semesters and it will guide them towards graduating the earliest. 
  
 What it does
